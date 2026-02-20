@@ -1,0 +1,99 @@
+export const metadata = {
+  title: 'Button Component',
+  description: 'A versatile button component with multiple variants'
+};
+
+import Demo from '@/components/Demo';
+import PropsTable from '@/components/PropsTable';
+import BasicButtonDemo from '@/content/components/button/demos/basic';
+import { buttonProps } from '@/content/components/button/props';
+
+export const basicDemoCode = `export default function BasicButtonDemo() {
+  return (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <button
+        style={{
+          padding: '0.5rem 1rem',
+          fontSize: '1rem',
+          fontWeight: 500,
+          backgroundColor: '#2563eb',
+          color: 'white',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+        }}
+      >
+        Solid Button
+      </button>
+      <button
+        style={{
+          padding: '0.5rem 1rem',
+          fontSize: '1rem',
+          fontWeight: 500,
+          backgroundColor: 'transparent',
+          color: '#2563eb',
+          border: '1px solid #2563eb',
+          borderRadius: '6px',
+          cursor: 'pointer',
+        }}
+      >
+        Outline Button
+      </button>
+      <button
+        style={{
+          padding: '0.5rem 1rem',
+          fontSize: '1rem',
+          fontWeight: 500,
+          backgroundColor: 'transparent',
+          color: '#374151',
+          border: 'none',
+          borderRadius: '6px',
+          cursor: 'pointer',
+        }}
+      >
+        Ghost Button
+      </button>
+    </div>
+  );
+}`;
+
+# Button Overview
+
+The Button component is a fundamental interactive element used throughout your application. It supports multiple variants and states to fit various design needs.
+
+## Basic usage
+
+The Button component comes in three variants: solid, outline, and ghost. Each variant conveys a different level of emphasis.
+
+<Demo title="Button variants" code={basicDemoCode}>
+  <BasicButtonDemo />
+</Demo>
+
+## Props
+
+<PropsTable props={buttonProps} />
+
+## Accessibility
+
+The Button component is built with accessibility in mind:
+
+- Proper semantic HTML using `<button>` element
+- Full keyboard support (Space and Enter keys)
+- Clear focus indicators
+- Disabled state properly communicated to screen readers
+- Sufficient color contrast in all variants
+
+## Usage guidelines
+
+### When to use
+
+- Use **solid** buttons for primary actions (e.g., "Submit", "Save")
+- Use **outline** buttons for secondary actions (e.g., "Cancel", "Back")
+- Use **ghost** buttons for tertiary actions or when you need minimal visual weight
+
+### Best practices
+
+- Keep button text short and action-oriented
+- Ensure buttons have sufficient padding for touch targets (minimum 44x44 pixels)
+- Don't use too many primary buttons on a single page
+- Provide visual feedback on hover and active states

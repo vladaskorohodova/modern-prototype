@@ -1,0 +1,75 @@
+export const metadata = {
+  title: 'Accessibility',
+  description: 'Building accessible applications with the Modern React Library'
+};
+
+# Accessibility
+
+Building accessible applications is a core principle of the Modern React Library. Every component is designed with accessibility in mind, following WCAG 2.1 guidelines.
+
+## Our approach
+
+We believe accessibility should be built-in, not bolted on. All our components include:
+
+- **Semantic HTML**: We use the right HTML elements for the right purposes
+- **ARIA attributes**: Proper ARIA labels, roles, and states where needed
+- **Keyboard navigation**: Full keyboard support for all interactive elements
+- **Screen reader support**: Tested with popular screen readers like NVDA and JAWS
+- **Focus management**: Clear focus indicators and logical tab order
+
+## Key principles
+
+### 1. Perceivable
+
+All information and UI components must be presentable to users in ways they can perceive.
+
+- Provide text alternatives for non-text content
+- Ensure sufficient color contrast (minimum 4.5:1 for normal text)
+- Make sure content is responsive and works at different zoom levels
+
+### 2. Operable
+
+User interface components and navigation must be operable.
+
+- All functionality is available from keyboard
+- Users have enough time to read and use content
+- Content doesn't cause seizures or physical reactions
+- Users can easily navigate and find content
+
+### 3. Understandable
+
+Information and operation of the user interface must be understandable.
+
+- Text is readable and understandable
+- Content appears and operates in predictable ways
+- Users are helped to avoid and correct mistakes
+
+### 4. Robust
+
+Content must be robust enough to be interpreted by a wide variety of user agents, including assistive technologies.
+
+## Component accessibility
+
+Each component in our system includes detailed accessibility documentation:
+
+- Keyboard shortcuts and navigation patterns
+- ARIA attributes used
+- Screen reader announcements
+- Focus management behavior
+
+Check the individual component documentation for specific accessibility features.
+
+## Testing
+
+We recommend testing your applications with:
+
+- **axe DevTools**: Browser extension for automated accessibility testing
+- **NVDA** or **JAWS**: Popular screen readers for testing
+- **Keyboard only**: Try navigating your app without a mouse
+- **Color contrast checkers**: Ensure your color choices meet WCAG standards
+
+## Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
+- [WebAIM Resources](https://webaim.org/resources/)

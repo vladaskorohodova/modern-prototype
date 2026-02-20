@@ -1,0 +1,49 @@
+.toc {
+  width: 240px;
+  padding: 2rem 0 2rem 2rem;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  margin-bottom: 0.5rem;
+}
+
+.item.nested {
+  margin-left: 1rem;
+}
+
+.link {
+  display: block;
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s;
+  line-height: 1.5;
+}
+
+.link:hover {
+  color: #111827;
+}
+
+.item.active .link {
+  color: #2563eb;
+  font-weight: 500;
+}
