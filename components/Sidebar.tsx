@@ -44,8 +44,8 @@ const navigationItems: NavItem[] = [
   {
     title: 'Components',
     items: [
-      { title: 'Button → Overview', href: '/docs/components/button/overview' },
       { title: 'Accordion', href: '/docs/components/accordion' },
+      { title: 'Button', href: '/docs/components/button' },
     ],
   },
   {
