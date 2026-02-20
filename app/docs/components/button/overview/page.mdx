@@ -1,6 +1,12 @@
+export const metadata = {
+  title: 'Button Component',
+  description: 'A versatile button component with multiple variants'
+};
+
 import Demo from '@/components/Demo';
 import PropsTable from '@/components/PropsTable';
 import BasicButtonDemo from '@/content/components/button/demos/basic';
+import { buttonProps } from '@/content/components/button/props';
 
 export const basicDemoCode = `export default function BasicButtonDemo() {
   return (
@@ -50,27 +56,6 @@ export const basicDemoCode = `export default function BasicButtonDemo() {
     </div>
   );
 }`;
-
-export const buttonProps = [
-  {
-    name: 'variant',
-    type: '"solid" | "outline" | "ghost"',
-    defaultValue: '"solid"',
-    description: 'The visual style of the button',
-  },
-  {
-    name: 'disabled',
-    type: 'boolean',
-    defaultValue: 'false',
-    description: 'Whether the button is disabled',
-  },
-  {
-    name: 'onClick',
-    type: '(event: React.MouseEvent) => void',
-    defaultValue: '',
-    description: 'Click event handler',
-  },
-];
 
 # Button Overview
 

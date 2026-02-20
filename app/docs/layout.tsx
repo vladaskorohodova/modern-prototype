@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
+import TableOfContents from '@/components/TableOfContents';
 import styles from './layout.module.css';
 
 export default function DocsLayout({
@@ -13,6 +14,7 @@ export default function DocsLayout({
       <div className={styles.content}>
         <Sidebar />
         <main className={styles.main}>{children}</main>
+        <TableOfContents />
       </div>
     </div>
   );

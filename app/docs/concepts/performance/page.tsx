@@ -4,7 +4,7 @@ export default function PerformancePage() {
   return (
     <ComingSoon
       title="Performance"
-      description="Learn how to optimize your application performance with the Modern React Knowledge System's built-in performance features and best practices."
+      description="Learn how to optimize your application performance with the Modern React Library's built-in performance features and best practices."
       plannedSections={[
         'Bundle size optimization',
         'Tree shaking and code splitting',

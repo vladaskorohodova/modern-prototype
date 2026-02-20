@@ -1,4 +1,4 @@
-# Modern React Knowledge System
+# Modern React Library
 
 A minimal documentation prototype for a modern React component library built with Next.js, TypeScript, and MDX.
 
@@ -183,4 +183,4 @@ MIT
 
 ## Author
 
-Modern React Knowledge System Team
+Modern React Library Team
