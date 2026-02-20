@@ -8,58 +8,23 @@ import PropsTable from '@/components/PropsTable';
 import BasicButtonDemo from '@/content/components/button/demos/basic';
 import { buttonProps } from '@/content/components/button/props';
 
-export const basicDemoCode = `export default function BasicButtonDemo() {
+export const basicDemoCode = `import { Button } from 'modern-react-knowledge';
+
+export default function BasicButtonDemo() {
   return (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <button
-        style={{
-          padding: '0.5rem 1rem',
-          fontSize: '1rem',
-          fontWeight: 500,
-          backgroundColor: '#2563eb',
-          color: 'white',
-          border: 'none',
-          borderRadius: '6px',
-          cursor: 'pointer',
-        }}
-      >
-        Solid Button
-      </button>
-      <button
-        style={{
-          padding: '0.5rem 1rem',
-          fontSize: '1rem',
-          fontWeight: 500,
-          backgroundColor: 'transparent',
-          color: '#2563eb',
-          border: '1px solid #2563eb',
-          borderRadius: '6px',
-          cursor: 'pointer',
-        }}
-      >
-        Outline Button
-      </button>
-      <button
-        style={{
-          padding: '0.5rem 1rem',
-          fontSize: '1rem',
-          fontWeight: 500,
-          backgroundColor: 'transparent',
-          color: '#374151',
-          border: 'none',
-          borderRadius: '6px',
-          cursor: 'pointer',
-        }}
-      >
-        Ghost Button
-      </button>
-    </div>
+    <Button />
+    <Button variant="outline" />
+    <Button variant="ghost" />
   );
 }`;
 
 # Button Overview
 
 The Button component is a fundamental interactive element used throughout your application. It supports multiple variants and states to fit various design needs.
+
+```tsx
+import { Button } from 'modern-react-knowledge';
+```
 
 ## Basic usage
 
