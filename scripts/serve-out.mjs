@@ -2,6 +2,7 @@ import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { basePath as defaultBasePath } from '../site-config.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,7 +17,7 @@ const port =
   envPortNumber <= 65535
     ? envPortNumber
     : 3000;
-const basePath = (process.env.BASE_PATH ?? '/modern-prototype').replace(/\/$/, '');
+const basePath = (process.env.BASE_PATH ?? defaultBasePath).replace(/\/$/, '');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
