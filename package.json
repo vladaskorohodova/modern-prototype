@@ -6,7 +6,7 @@
     "dev": "next dev",
     "typecheck": "tsc --noEmit",
     "build": "next build",
-    "preview": "npx --yes local-web-server --directory out --port 3000 --rewrite \"/modern-prototype/(.*) -> /$1\"",
+    "preview": "npx --yes local-web-server --directory out --port 3000 --rewrite \"/modern-prototype/(.*) -> /$1\" --rewrite \"/modern-prototype -> /\"",
     "start": "npm run preview"
   },
   "dependencies": {

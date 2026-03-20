@@ -39,7 +39,7 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The home page includes a link to the documentation homepage (`/docs/get-started/installation`).
+The home page includes a link to the documentation homepage (`/docs/get-started/installation/`).
 
 ## Project Structure
 
