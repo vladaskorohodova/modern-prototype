@@ -7,7 +7,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const outDir = path.resolve(__dirname, '..', process.env.OUT_DIR ?? 'out');
-const port = Number(process.env.PORT ?? 3000);
+const envPortRaw = process.env.PORT;
+const envPortNumber = envPortRaw !== undefined ? Number(envPortRaw) : 3000;
+const port =
+  Number.isFinite(envPortNumber) &&
+  Number.isInteger(envPortNumber) &&
+  envPortNumber >= 0 &&
+  envPortNumber <= 65535
+    ? envPortNumber
+    : 3000;
 const basePath = (process.env.BASE_PATH ?? '/modern-prototype').replace(/\/$/, '');
 
 const mimeTypes = {
@@ -48,8 +56,11 @@ async function readFileIfExists(filePath) {
   try {
     const data = await fs.readFile(filePath);
     return data;
-  } catch {
-    return null;
+  } catch (err) {
+    if (err && (err.code === 'ENOENT' || err.code === 'ENOTDIR')) {
+      return null;
+    }
+    throw err;
   }
 }
 
@@ -78,7 +89,7 @@ async function resolveExportedPath(pathname) {
 
 const server = http.createServer(async (req, res) => {
   try {
-    const reqUrl = new URL(req.url ?? '/', `http://${req.headers.host ?? 'localhost'}`);
+    const reqUrl = new URL(req.url ?? '/', 'http://localhost');
 
     // Normalize and apply basePath mapping (so /modern-prototype/... maps into out/)
     const originalPath = reqUrl.pathname;
