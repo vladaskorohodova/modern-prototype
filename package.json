@@ -6,7 +6,7 @@
     "dev": "next dev",
     "typecheck": "tsc --noEmit",
     "build": "next build",
-    "preview": "npx --yes local-web-server --directory out --port 3000 --rewrite \"/modern-prototype/(.*) -> /$1\" --rewrite \"/modern-prototype -> /\"",
+    "preview": "ws --directory out --port 3000 --rewrite \"/modern-prototype/(.*) -> /$1\" --rewrite \"/modern-prototype -> /\"",
     "start": "npm run preview"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@types/node": "^20",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "local-web-server": "5.4.0",
     "typescript": "^5"
   }
 }
