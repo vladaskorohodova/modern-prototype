@@ -149,7 +149,7 @@ npm run preview
 
 Then open [http://localhost:3000/modern-prototype/](http://localhost:3000/modern-prototype/) (the `basePath` used for GitHub Pages).
 
-`npm start` is an alias for `npm run preview`.
+`npm start` runs the same static preview server as `npm run preview`.
 
 ### Typecheck
 
