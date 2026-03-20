@@ -38,7 +38,9 @@ function safeJoin(root, requestPath) {
   const normalized = path.posix.normalize(requestPath);
   const withoutLeadingSlash = normalized.replace(/^\/+/, '');
   const resolved = path.resolve(root, withoutLeadingSlash);
-  if (!resolved.startsWith(root)) return null;
+  const relative = path.relative(root, resolved);
+  if (relative === '') return resolved;
+  if (relative.startsWith('..') || path.isAbsolute(relative)) return null;
   return resolved;
 }
 

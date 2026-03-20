@@ -167,7 +167,7 @@ npm run typecheck
 
 ## What's NOT Included
 
-This is a minimal prototype focusing on the vertical slice. The following are intentionally not implemented:
+The project is a minimal prototype focusing on a vertical slice. The following are intentionally not implemented:
 
 - Search functionality
 - Version switcher
@@ -185,7 +185,7 @@ This is a minimal prototype focusing on the vertical slice. The following are in
 - All pages use Next.js App Router conventions
 - MDX pages are in `app/docs/[...path]/page.mdx`
 - Stub pages are React components (`.tsx`) using `ComingSoon`
-- CSS Modules provide scoped styling
+- CSS Modules scope styles to components
 - The Demo component requires manual code strings (no automatic extraction)
 - Props tables are manually defined (no TS extraction)
 
