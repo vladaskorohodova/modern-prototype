@@ -1,13 +1,13 @@
 import type { NextConfig } from "next";
 import createMDX from '@next/mdx';
-
-const repo = "modern-prototype";
+import { assetPrefix, basePath } from './site-config.mjs';
 
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   output: "export",          // static export
-  basePath: `/${repo}`,      // important for GH Pages
-  assetPrefix: `/${repo}/`,  // important for assets
+  trailingSlash: true,        // improves static hosting navigation (e.g., GH Pages)
+  basePath,                  // important for GH Pages
+  assetPrefix,               // important for assets
   images: { unoptimized: true }, // required for next/image on export
 };
 

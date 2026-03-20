@@ -39,7 +39,7 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The app will automatically redirect to the documentation homepage (`/docs/get-started/installation`).
+The home page includes a link to the documentation homepage (`/docs/get-started/installation/`).
 
 ## Project Structure
 
@@ -63,7 +63,7 @@ modern-prototype/
 │   │   └── releases/
 │   │       └── v0-1-0/            # ✓ Real MDX page
 │   ├── layout.tsx                 # Root layout
-│   └── page.tsx                   # Redirects to docs
+│   └── page.tsx                   # Minimal landing page (static-export safe)
 ├── components/
 │   ├── Header.tsx                 # Top header with site title
 │   ├── Sidebar.tsx                # Left navigation sidebar
@@ -139,10 +139,22 @@ Stub pages:
 npm run build
 ```
 
-### Start production server
+This creates a static export in `out/`.
+
+### Preview the static export locally
 
 ```bash
-npm start
+npm run preview
+```
+
+Then open [http://localhost:3000/modern-prototype/](http://localhost:3000/modern-prototype/) (the `basePath` used for GitHub Pages).
+
+`npm start` runs the same static preview server as `npm run preview`.
+
+### Typecheck
+
+```bash
+npm run typecheck
 ```
 
 ## Technology Stack
@@ -155,7 +167,7 @@ npm start
 
 ## What's NOT Included
 
-This is a minimal prototype focusing on the vertical slice. The following are intentionally not implemented:
+The project is a minimal prototype focusing on a vertical slice. The following are intentionally not implemented:
 
 - Search functionality
 - Version switcher
@@ -173,7 +185,7 @@ This is a minimal prototype focusing on the vertical slice. The following are in
 - All pages use Next.js App Router conventions
 - MDX pages are in `app/docs/[...path]/page.mdx`
 - Stub pages are React components (`.tsx`) using `ComingSoon`
-- CSS Modules provide scoped styling
+- CSS Modules scope styles to components
 - The Demo component requires manual code strings (no automatic extraction)
 - Props tables are manually defined (no TS extraction)
 
