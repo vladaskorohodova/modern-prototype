@@ -6,6 +6,7 @@ const repo = "modern-prototype";
 const nextConfig: NextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   output: "export",          // static export
+  trailingSlash: true,        // improves static hosting navigation (e.g., GH Pages)
   basePath: `/${repo}`,      // important for GH Pages
   assetPrefix: `/${repo}/`,  // important for assets
   images: { unoptimized: true }, // required for next/image on export

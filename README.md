@@ -39,7 +39,7 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The app will automatically redirect to the documentation homepage (`/docs/get-started/installation`).
+The home page includes a link to the documentation homepage (`/docs/get-started/installation`).
 
 ## Project Structure
 
@@ -63,7 +63,7 @@ modern-prototype/
 │   │   └── releases/
 │   │       └── v0-1-0/            # ✓ Real MDX page
 │   ├── layout.tsx                 # Root layout
-│   └── page.tsx                   # Redirects to docs
+│   └── page.tsx                   # Minimal landing page (static-export safe)
 ├── components/
 │   ├── Header.tsx                 # Top header with site title
 │   ├── Sidebar.tsx                # Left navigation sidebar
@@ -139,10 +139,22 @@ Stub pages:
 npm run build
 ```
 
-### Start production server
+This creates a static export in `out/`.
+
+### Preview the static export locally
 
 ```bash
-npm start
+npm run preview
+```
+
+Then open [http://localhost:3000/modern-prototype/](http://localhost:3000/modern-prototype/) (the `basePath` used for GitHub Pages).
+
+`npm start` is an alias for `npm run preview`.
+
+### Typecheck
+
+```bash
+npm run typecheck
 ```
 
 ## Technology Stack

@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "typecheck": "tsc --noEmit",
     "build": "next build",
-    "start": "next start"
+    "preview": "npx --yes local-web-server --directory out --port 3000 --rewrite \"/modern-prototype/(.*) -> /$1\"",
+    "start": "npm run preview"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
