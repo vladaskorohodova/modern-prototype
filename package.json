@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "typecheck": "node -e \"const fs=require('fs'); for (const p of ['.next/types','.next/dev/types']) { try { fs.rmSync(p,{ recursive:true, force:true }); } catch (e) {} }\" && tsc --noEmit",
+    "typecheck": "node scripts/clean-next-types.mjs && tsc --noEmit",
     "build": "next build",
     "preview": "node scripts/serve-out.mjs",
     "start": "node scripts/serve-out.mjs"
