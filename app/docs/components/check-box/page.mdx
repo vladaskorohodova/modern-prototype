@@ -1,0 +1,57 @@
+export const metadata = {
+  title: 'CheckBox Component',
+  description: 'A checkbox component for boolean choices and opt-in settings'
+};
+
+import Demo from '@/components/Demo';
+import PropsTable from '@/components/PropsTable';
+import BasicCheckBoxDemo from '@/content/components/check-box/demos/basic';
+import { checkBoxProps } from '@/content/components/check-box/props';
+
+export const basicDemoCode = `import { CheckBox } from 'modern-react-knowledge';
+
+export default function BasicCheckBoxDemo() {
+  return (
+    <>
+      <CheckBox defaultChecked label="Send me product updates" />
+      <CheckBox label="I agree to the terms" />
+      <CheckBox disabled defaultChecked label="Disabled option" />
+    </>
+  );
+}`;
+
+# CheckBox Overview
+
+Use the CheckBox component for independent boolean selections (on/off). Checkboxes are typically used for settings, opt-ins, and confirming an action.
+
+```tsx
+import { CheckBox } from 'modern-react-knowledge';
+```
+
+## Basic usage
+
+<Demo title="Checkbox examples" code={basicDemoCode}>
+  <BasicCheckBoxDemo />
+</Demo>
+
+## Props
+
+<PropsTable props={checkBoxProps} />
+
+## Accessibility
+
+- Use a single clickable label for the checkbox and its text.
+- Use clear, specific label text (avoid vague labels like “Enabled”).
+- For validation, connect error text via `aria-describedby`.
+
+## Usage guidelines
+
+### When to use
+
+- Multiple independent selections
+- Consent/confirmation (e.g., “I agree…”) when appropriate
+
+### Best practices
+
+- Prefer radio buttons for mutually exclusive choices
+- Keep labels short and state-based (what will happen when checked)

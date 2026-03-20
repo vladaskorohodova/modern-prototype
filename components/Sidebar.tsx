@@ -45,7 +45,10 @@ const navigationItems: NavItem[] = [
     title: 'Components',
     items: [
       { title: 'Accordion', href: '/docs/components/accordion' },
+      { title: 'Avatar', href: '/docs/components/avatar' },
       { title: 'Button', href: '/docs/components/button' },
+      { title: 'CheckBox', href: '/docs/components/check-box' },
+      { title: 'TextBox', href: '/docs/components/text-box' },
     ],
   },
   {

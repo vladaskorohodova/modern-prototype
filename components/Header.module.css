@@ -10,6 +10,21 @@
 .title {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #111827;
   margin: 0;
+}
+
+.homeLink {
+  color: #111827;
+  text-decoration: none;
+  transition: color 0.18s ease, opacity 0.18s ease;
+}
+
+.homeLink:hover {
+  color: #0f766e;
+}
+
+.homeLink:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 4px;
+  border-radius: 6px;
 }

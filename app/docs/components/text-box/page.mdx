@@ -1,0 +1,58 @@
+export const metadata = {
+  title: 'TextBox Component',
+  description: 'A text input component for forms with consistent states and accessibility'
+};
+
+import Demo from '@/components/Demo';
+import PropsTable from '@/components/PropsTable';
+import BasicTextBoxDemo from '@/content/components/text-box/demos/basic';
+import { textBoxProps } from '@/content/components/text-box/props';
+
+export const basicDemoCode = `import { TextBox } from 'modern-react-knowledge';
+
+export default function BasicTextBoxDemo() {
+  return (
+    <>
+      <TextBox label="Email" placeholder="name@company.com" />
+      <TextBox label="Disabled" disabled value="Read-only" />
+      <TextBox label="Error" defaultValue="not-an-email" error />
+    </>
+  );
+}`;
+
+# TextBox Overview
+
+Use the TextBox component to collect short, single-line user input (names, emails, search queries, IDs). It supports common states like disabled and error, and should always be paired with an accessible label.
+
+```tsx
+import { TextBox } from 'modern-react-knowledge';
+```
+
+## Basic usage
+
+<Demo title="TextBox states" code={basicDemoCode}>
+  <BasicTextBoxDemo />
+</Demo>
+
+## Props
+
+<PropsTable props={textBoxProps} />
+
+## Accessibility
+
+- Always add an associated label (visible or via `aria-label`).
+- Use `aria-invalid` and an error message when validation fails.
+- Don’t rely on placeholder text as the only label.
+
+## Usage guidelines
+
+### When to use
+
+- Single-line input: names, emails, usernames
+- Search inputs
+
+### Best practices
+
+- Validate on blur or submit (avoid overly aggressive validation while typing)
+- Use helpful error messages and examples
+- Use appropriate input type (e.g., `email`, `password`)
