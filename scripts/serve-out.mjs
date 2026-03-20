@@ -13,7 +13,7 @@ const envPortNumber = envPortRaw !== undefined ? Number(envPortRaw) : 3000;
 const port =
   Number.isFinite(envPortNumber) &&
   Number.isInteger(envPortNumber) &&
-  envPortNumber >= 0 &&
+  envPortNumber >= 1 &&
   envPortNumber <= 65535
     ? envPortNumber
     : 3000;
@@ -79,11 +79,11 @@ async function resolveExportedPath(pathname) {
 
   // Next static export with trailingSlash usually uses /route/index.html
   const indexHtml = safeJoin(outDir, '/' + candidateBase + '/index.html');
-  if (indexHtml) return indexHtml;
+  if (indexHtml && (await readFileIfExists(indexHtml)) !== null) return indexHtml;
 
   // Fallback: /route.html
   const htmlFile = safeJoin(outDir, '/' + candidateBase + '.html');
-  if (htmlFile) return htmlFile;
+  if (htmlFile && (await readFileIfExists(htmlFile)) !== null) return htmlFile;
 
   return null;
 }
