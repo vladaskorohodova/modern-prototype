@@ -20,7 +20,6 @@ export const accordionProps = [
   {
     name: 'expandedIds',
     type: 'string[]',
-    defaultValue: '',
     description: 'Controlled expanded item ids',
   },
   {

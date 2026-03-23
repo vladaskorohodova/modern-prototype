@@ -2,7 +2,6 @@ export const checkBoxProps = [
   {
     name: 'checked',
     type: 'boolean',
-    defaultValue: '',
     description: 'Controlled checked state',
   },
   {

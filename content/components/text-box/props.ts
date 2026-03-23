@@ -2,7 +2,6 @@ export const textBoxProps = [
   {
     name: 'value',
     type: 'string',
-    defaultValue: '',
     description: 'Controlled value',
   },
   {
