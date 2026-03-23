@@ -56,7 +56,11 @@ export default function TableOfContents({ mode = 'desktop' }: TableOfContentsPro
 
   if (mode === 'mobile') {
     return (
-      <details className={styles.mobileToc}>
+      <details
+        className={styles.mobileToc}
+        role="navigation"
+        aria-label="On this page"
+      >
         <summary className={styles.mobileSummary}>On this page</summary>
         <ul className={styles.list}>
           {headings.map((heading) => (
