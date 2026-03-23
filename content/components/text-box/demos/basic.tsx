@@ -1,4 +1,6 @@
 export default function BasicTextBoxDemo() {
+  const errorMessageId = 'text-box-error-message';
+
   return (
     <div style={{ display: 'grid', gap: 12, maxWidth: 520 }}>
       <label style={{ display: 'grid', gap: 6 }}>
@@ -38,6 +40,7 @@ export default function BasicTextBoxDemo() {
         <input
           defaultValue="not-an-email"
           aria-invalid="true"
+          aria-describedby={errorMessageId}
           style={{
             padding: '10px 12px',
             borderRadius: 8,
@@ -46,7 +49,9 @@ export default function BasicTextBoxDemo() {
             fontSize: 14,
           }}
         />
-        <span style={{ fontSize: 12, color: '#b91c1c' }}>Enter a valid email.</span>
+        <span id={errorMessageId} style={{ fontSize: 12, color: '#b91c1c' }}>
+          Enter a valid email.
+        </span>
       </label>
     </div>
   );

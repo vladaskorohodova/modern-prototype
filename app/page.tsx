@@ -38,7 +38,7 @@ export default function Home() {
             <article className={styles.card}>
               <div className={styles.cardTop}>
                 <span className={styles.cardLabel}>Button</span>
-                <Link href="/docs/components/button">View component</Link>
+                <Link href="/docs/components/button">View Button</Link>
               </div>
               <div className={styles.cardBody}>
                 <p className={styles.cardText}>Action styles for decisive primary flows and quieter secondary moments.</p>
@@ -56,7 +56,7 @@ export default function Home() {
             <article className={styles.card}>
               <div className={styles.cardTop}>
                 <span className={styles.cardLabel}>Accordion</span>
-                <Link href="/docs/components/accordion">View component</Link>
+                <Link href="/docs/components/accordion">View Accordion</Link>
               </div>
               <div className={styles.cardBody}>
                 <p className={styles.cardText}>Progressive disclosure for settings, FAQs, and long-form product content.</p>
@@ -70,7 +70,7 @@ export default function Home() {
             <article className={styles.card}>
               <div className={styles.cardTop}>
                 <span className={styles.cardLabel}>TextBox</span>
-                <Link href="/docs/components/text-box">View component</Link>
+                <Link href="/docs/components/text-box">View TextBox</Link>
               </div>
               <div className={styles.cardBody}>
                 <p className={styles.cardText}>Single-line input that keeps labels, values, and validation easy to read.</p>
@@ -84,7 +84,7 @@ export default function Home() {
             <article className={styles.card}>
               <div className={styles.cardTop}>
                 <span className={styles.cardLabel}>CheckBox</span>
-                <Link href="/docs/components/check-box">View component</Link>
+                <Link href="/docs/components/check-box">View CheckBox</Link>
               </div>
               <div className={styles.cardBody}>
                 <p className={styles.cardText}>Straightforward toggles for preferences, consent, and lightweight settings.</p>
@@ -102,7 +102,7 @@ export default function Home() {
             <article className={`${styles.card} ${styles.cardWide}`}>
               <div className={styles.cardTop}>
                 <span className={styles.cardLabel}>Avatar</span>
-                <Link href="/docs/components/avatar">View component</Link>
+                <Link href="/docs/components/avatar">View Avatar</Link>
               </div>
               <div className={styles.cardBody}>
                 <p className={styles.cardText}>Identity markers that stay readable with images, initials, and mixed team lists.</p>
