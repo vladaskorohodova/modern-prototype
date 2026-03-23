@@ -1,7 +1,7 @@
 'use client';
 
-import { Children, isValidElement, useMemo, useState } from 'react';
-import { Highlight, themes } from 'prism-react-renderer';
+import { Children, isValidElement, useEffect, useMemo, useRef, useState } from 'react';
+import { Highlight, themes, type Language } from 'prism-react-renderer';
 import styles from './CodeBlock.module.css';
 
 type CodeElementProps = {
@@ -15,6 +15,24 @@ interface CodeBlockProps {
   language?: string;
   embedded?: boolean;
 }
+
+const FALLBACK_LANGUAGE: Language = 'tsx';
+
+const languageAliases: Record<string, Language> = {
+  bash: 'bash',
+  shell: 'bash',
+  sh: 'bash',
+  ts: 'ts',
+  typescript: 'ts',
+  js: 'javascript',
+  javascript: 'javascript',
+  jsx: 'jsx',
+  md: 'markdown',
+  mdx: 'markdown',
+  markdown: 'markdown',
+  tsx: 'tsx',
+  typescriptreact: 'tsx',
+};
 
 function extractTextContent(node: React.ReactNode): string {
   if (typeof node === 'string' || typeof node === 'number') {
@@ -58,29 +76,12 @@ function extractLanguage(children: React.ReactNode): string | undefined {
   return undefined;
 }
 
-function normalizeLanguage(language?: string) {
-  switch ((language || '').toLowerCase()) {
-    case 'bash':
-    case 'shell':
-    case 'sh':
-      return 'bash';
-    case 'ts':
-    case 'typescript':
-      return 'ts';
-    case 'js':
-    case 'javascript':
-      return 'js';
-    case 'jsx':
-      return 'jsx';
-    case 'md':
-    case 'mdx':
-    case 'markdown':
-      return 'md';
-    case 'tsx':
-    case 'typescriptreact':
-    default:
-      return 'tsx';
+function normalizeLanguage(language?: string): Language {
+  if (!language) {
+    return FALLBACK_LANGUAGE;
   }
+
+  return languageAliases[language.toLowerCase()] ?? FALLBACK_LANGUAGE;
 }
 
 export default function CodeBlock({
@@ -90,6 +91,7 @@ export default function CodeBlock({
   embedded = false,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const resetCopiedTimeoutRef = useRef<number | null>(null);
 
   const rawCode = useMemo(() => {
     const source = code ?? extractTextContent(children);
@@ -100,6 +102,14 @@ export default function CodeBlock({
     () => normalizeLanguage(language ?? extractLanguage(children)),
     [children, language]
   );
+
+  useEffect(() => {
+    return () => {
+      if (resetCopiedTimeoutRef.current !== null) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleCopy = async () => {
     // Feature-detect the Clipboard API to avoid errors in unsupported or insecure contexts.
@@ -113,8 +123,16 @@ export default function CodeBlock({
 
     try {
       await navigator.clipboard.writeText(rawCode);
+
+      if (resetCopiedTimeoutRef.current !== null) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+      }
+
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
+      resetCopiedTimeoutRef.current = window.setTimeout(() => {
+        setCopied(false);
+        resetCopiedTimeoutRef.current = null;
+      }, 2000);
     } catch (error) {
       // Swallow or log the error to prevent an unhandled promise rejection.
       // console.error('Failed to copy code to clipboard:', error);
@@ -140,13 +158,13 @@ export default function CodeBlock({
         <Highlight
           theme={themes.vsDark}
           code={rawCode}
-          language={resolvedLanguage as never}
+          language={resolvedLanguage}
         >
           {({ tokens, getLineProps, getTokenProps }) => (
             <pre className={styles.pre}>
               <code className={styles.code}>
                 {tokens.map((line, lineIndex) => (
-                  <div
+                  <span
                     key={lineIndex}
                     {...getLineProps({ line, key: lineIndex })}
                     className={styles.line}
@@ -157,7 +175,7 @@ export default function CodeBlock({
                         {...getTokenProps({ token, key: tokenIndex })}
                       />
                     ))}
-                  </div>
+                  </span>
                 ))}
               </code>
             </pre>
