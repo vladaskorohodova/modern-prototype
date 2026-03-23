@@ -10,7 +10,8 @@ export default function ScrollToTopButton() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsVisible(window.scrollY > VISIBILITY_THRESHOLD);
+      const shouldBeVisible = window.scrollY > VISIBILITY_THRESHOLD;
+      setIsVisible((prev) => (prev === shouldBeVisible ? prev : shouldBeVisible));
     };
 
     handleScroll();

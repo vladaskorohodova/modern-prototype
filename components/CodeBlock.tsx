@@ -102,9 +102,23 @@ export default function CodeBlock({
   );
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(rawCode);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 2000);
+    // Feature-detect the Clipboard API to avoid errors in unsupported or insecure contexts.
+    if (
+      typeof navigator === 'undefined' ||
+      !navigator.clipboard ||
+      typeof navigator.clipboard.writeText !== 'function'
+    ) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(rawCode);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      // Swallow or log the error to prevent an unhandled promise rejection.
+      // console.error('Failed to copy code to clipboard:', error);
+    }
   };
 
   if (!rawCode) {

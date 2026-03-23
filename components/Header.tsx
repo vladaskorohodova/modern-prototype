@@ -47,7 +47,7 @@ export default function Header({
           href={GITHUB_URL}
           className={styles.githubButton}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           aria-label="View project on GitHub"
         >
           <svg viewBox="0 0 16 16" aria-hidden="true" className={styles.githubIcon}>
