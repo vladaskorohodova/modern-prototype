@@ -1,0 +1,57 @@
+export const metadata = {
+  title: 'Avatar Component',
+  description: 'A user identity component that supports images and fallbacks'
+};
+
+import Demo from '@/components/Demo';
+import PropsTable from '@/components/PropsTable';
+import BasicAvatarDemo from '@/content/components/avatar/demos/basic';
+import { avatarProps } from '@/content/components/avatar/props';
+
+export const basicDemoCode = `import { Avatar } from 'modern-react-knowledge';
+
+export default function BasicAvatarDemo() {
+  return (
+    <>
+      <Avatar size="sm" fallback="VS" />
+      <Avatar size="md" fallback="VS" />
+      <Avatar size="lg" fallback="VS" />
+    </>
+  );
+}`;
+
+# Avatar Overview
+
+Use the Avatar component to represent a person or entity. Avatars typically display a profile image, but must gracefully fall back to initials when the image is missing.
+
+```tsx
+import { Avatar } from 'modern-react-knowledge';
+```
+
+## Basic usage
+
+<Demo title="Avatar sizes" code={basicDemoCode}>
+  <BasicAvatarDemo />
+</Demo>
+
+## Props
+
+<PropsTable props={avatarProps} />
+
+## Accessibility
+
+- Use meaningful `alt` text when the image conveys identity.
+- If using a purely decorative avatar, set `alt=""` and ensure the nearby name adds context.
+- Ensure sufficient contrast for fallback initials.
+
+## Usage guidelines
+
+### When to use
+
+- User menus, profile headers, comments, and participant lists
+
+### Best practices
+
+- Keep fallback initials to 1–2 characters
+- Use consistent sizing within a list
+- Avoid relying on color alone to differentiate users

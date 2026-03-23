@@ -1,0 +1,60 @@
+export const metadata = {
+  title: 'Accordion Component',
+  description: 'A collapsible content component for grouping related information'
+};
+
+import Demo from '@/components/Demo';
+import PropsTable from '@/components/PropsTable';
+import BasicAccordionDemo from '@/content/components/accordion/demos/basic';
+import { accordionProps } from '@/content/components/accordion/props';
+
+export const basicDemoCode = `import { Accordion } from 'modern-react-knowledge';
+
+export default function BasicAccordionDemo() {
+  return (
+    <Accordion
+      items={[
+        { id: 'a', title: 'What is this?', content: '...' },
+        { id: 'b', title: 'Keyboard support', content: '...' },
+      ]}
+    />
+  );
+}`;
+
+# Accordion Overview
+
+Use the Accordion component to progressively disclose content in a compact format. Accordions are especially helpful for FAQs, settings panels, and pages with lots of optional detail.
+
+```tsx
+import { Accordion } from 'modern-react-knowledge';
+```
+
+## Basic usage
+
+<Demo title="Basic accordion" code={basicDemoCode}>
+  <BasicAccordionDemo />
+</Demo>
+
+## Props
+
+<PropsTable props={accordionProps} />
+
+## Accessibility
+
+- Use clear, descriptive section titles.
+- Ensure each header is keyboard-focusable and toggles with Enter/Space.
+- Preserve state for assistive technology (expanded/collapsed).
+- Avoid placing critical required content behind collapse if it must be discovered.
+
+## Usage guidelines
+
+### When to use
+
+- For content that benefits from being scanned before expanding details
+- For long pages where you want to reduce vertical scrolling
+
+### Best practices
+
+- Keep titles short and specific
+- Don’t nest accordions deeply
+- Default to closed sections unless users commonly need the content
