@@ -60,14 +60,18 @@ export default function DocsShell({ children }: DocsShellProps) {
           />
         ) : null}
         <main className={styles.main}>
-          <div className={styles.mobileTocWrap}>
-            <TableOfContents mode="mobile" />
-          </div>
+          {isMobileViewport && (
+            <div className={styles.mobileTocWrap}>
+              <TableOfContents mode="mobile" />
+            </div>
+          )}
           {children}
         </main>
-        <div className={styles.desktopTocWrap}>
-          <TableOfContents mode="desktop" />
-        </div>
+        {!isMobileViewport && (
+          <div className={styles.desktopTocWrap}>
+            <TableOfContents mode="desktop" />
+          </div>
+        )}
       </div>
     </div>
   );
