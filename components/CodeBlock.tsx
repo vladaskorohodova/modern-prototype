@@ -91,6 +91,7 @@ export default function CodeBlock({
   embedded = false,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const [canCopy, setCanCopy] = useState(false);
   const resetCopiedTimeoutRef = useRef<number | null>(null);
 
   const rawCode = useMemo(() => {
@@ -104,6 +105,14 @@ export default function CodeBlock({
   );
 
   useEffect(() => {
+    setCanCopy(
+      typeof window !== 'undefined' &&
+        window.isSecureContext &&
+        typeof navigator !== 'undefined' &&
+        !!navigator.clipboard &&
+        typeof navigator.clipboard.writeText === 'function'
+    );
+
     return () => {
       if (resetCopiedTimeoutRef.current !== null) {
         window.clearTimeout(resetCopiedTimeoutRef.current);
@@ -112,12 +121,7 @@ export default function CodeBlock({
   }, []);
 
   const handleCopy = async () => {
-    // Feature-detect the Clipboard API to avoid errors in unsupported or insecure contexts.
-    if (
-      typeof navigator === 'undefined' ||
-      !navigator.clipboard ||
-      typeof navigator.clipboard.writeText !== 'function'
-    ) {
+    if (!canCopy) {
       return;
     }
 
@@ -133,9 +137,7 @@ export default function CodeBlock({
         setCopied(false);
         resetCopiedTimeoutRef.current = null;
       }, 2000);
-    } catch (error) {
-      // Swallow or log the error to prevent an unhandled promise rejection.
-      // console.error('Failed to copy code to clipboard:', error);
+    } catch {
     }
   };
 
@@ -145,16 +147,18 @@ export default function CodeBlock({
 
   return (
     <div className={`${styles.wrapper} ${embedded ? styles.embedded : ''}`}>
-      <button
-        type="button"
-        className={styles.copyButton}
-        onClick={handleCopy}
-        aria-label={copied ? 'Code copied to clipboard' : 'Copy code to clipboard'}
-      >
-        {copied ? 'Copied' : 'Copy'}
-      </button>
+      {canCopy ? (
+        <button
+          type="button"
+          className={styles.copyButton}
+          onClick={handleCopy}
+          aria-label={copied ? 'Code copied to clipboard' : 'Copy code to clipboard'}
+        >
+          {copied ? 'Copied' : 'Copy'}
+        </button>
+      ) : null}
 
-      <div className={styles.viewport}>
+      <div className={`${styles.viewport} ${canCopy ? styles.hasCopyButton : ''}`}>
         <Highlight
           theme={themes.vsDark}
           code={rawCode}

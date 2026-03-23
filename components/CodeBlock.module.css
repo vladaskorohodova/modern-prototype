@@ -20,6 +20,9 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+}
+
+.hasCopyButton {
   padding-top: 3.25rem;
 }
 
@@ -79,6 +82,10 @@
   }
 
   .viewport {
+    overflow-x: hidden;
+  }
+
+  .hasCopyButton {
     padding-top: 3rem;
   }
 
@@ -94,10 +101,6 @@
     line-height: 1.6;
     white-space: pre-wrap;
     word-break: break-word;
-  }
-
-  .viewport {
-    overflow-x: hidden;
   }
 
   .copyButton {

@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { githubRepoUrl } from '@/site-config.mjs';
 import styles from './Header.module.css';
-
-const GITHUB_URL = 'https://github.com/vladaskorohodova/modern-prototype';
 
 interface HeaderProps {
   showDocsMenu?: boolean;
@@ -44,7 +43,7 @@ export default function Header({
 
       <div className={styles.actions}>
         <a
-          href={GITHUB_URL}
+          href={githubRepoUrl}
           className={styles.githubButton}
           target="_blank"
           rel="noopener noreferrer"

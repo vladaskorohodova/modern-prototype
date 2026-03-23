@@ -8,6 +8,18 @@ const VISIBILITY_THRESHOLD = 320;
 export default function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
 
+  const scrollToTop = () => {
+    const prefersReducedMotion =
+      typeof window !== 'undefined' &&
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const shouldBeVisible = window.scrollY > VISIBILITY_THRESHOLD;
@@ -29,7 +41,7 @@ export default function ScrollToTopButton() {
       type="button"
       className={styles.button}
       aria-label="Go to top"
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onClick={scrollToTop}
     >
       <span className={styles.icon} aria-hidden="true">
         ↑
