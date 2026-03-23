@@ -11,6 +11,12 @@
   background: white;
 }
 
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
 .menuButton {
   display: none;
   align-items: center;
@@ -49,6 +55,7 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
+  min-width: 0;
 }
 
 .homeLink {
@@ -75,6 +82,42 @@
   outline-offset: 2px;
 }
 
+.githubButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  background: white;
+  color: #111827;
+  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+}
+
+.githubButton:hover {
+  border-color: rgba(15, 118, 110, 0.28);
+  color: #0f766e;
+  background: #f8fffd;
+}
+
+.githubButton:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
+}
+
+.githubIcon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.githubLabel {
+  line-height: 1;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
 @media (max-width: 980px) {
   .header {
     padding: 0 1rem;
@@ -96,5 +139,15 @@
 
   .menuText {
     display: none;
+  }
+
+  .githubLabel {
+    display: none;
+  }
+
+  .githubButton {
+    min-width: 44px;
+    padding: 0;
+    justify-content: center;
   }
 }

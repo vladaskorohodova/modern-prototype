@@ -53,37 +53,10 @@
   outline-offset: 2px;
 }
 
-.copyButton {
-  min-width: 70px;
-}
-
 .preview {
   padding: 2rem 1.5rem;
   background: #fafafa;
   overflow-x: auto;
-}
-
-.codeBlock {
-  border-top: 1px solid #e5e7eb;
-  background: #1e293b;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-
-.codeBlock pre {
-  margin: 0;
-  padding: 1.5rem;
-  overflow-x: auto;
-}
-
-.codeBlock code {
-  display: block;
-  min-width: max-content;
-  font-family: 'Monaco', 'Courier New', monospace;
-  font-size: 0.875rem;
-  line-height: 1.7;
-  color: #e2e8f0;
 }
 
 @media (max-width: 768px) {
@@ -99,10 +72,6 @@
 
   .preview {
     padding: 1.25rem 1rem;
-  }
-
-  .codeBlock pre {
-    padding: 1rem;
   }
 }
 
@@ -120,20 +89,7 @@
     align-items: stretch;
   }
 
-  .button,
-  .copyButton {
+  .button {
     width: 100%;
-  }
-
-  .codeBlock,
-  .codeBlock pre {
-    overflow-x: visible;
-  }
-
-  .codeBlock code {
-    min-width: 0;
-    white-space: pre-wrap;
-    word-break: break-word;
-    font-size: 0.8125rem;
   }
 }

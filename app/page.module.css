@@ -11,8 +11,8 @@
   --warm: #b45309;
 
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  justify-content: center;
   font-family: var(
     --font-geist-sans,
     ui-sans-serif,
@@ -38,6 +38,7 @@
   max-width: 1240px;
   flex-direction: column;
   gap: 40px;
+  margin: 0 auto;
   padding: 56px 32px 72px;
 }
 
