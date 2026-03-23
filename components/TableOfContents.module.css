@@ -1,3 +1,24 @@
+.mobileToc {
+  margin-bottom: 1.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fafafa;
+}
+
+.mobileSummary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.mobileSummary:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
+}
+
 .toc {
   width: 240px;
   padding: 2rem 0 2rem 2rem;
@@ -31,7 +52,10 @@
 }
 
 .link {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.25rem 0;
   font-size: 0.875rem;
   color: #6b7280;
   text-decoration: none;
@@ -43,7 +67,18 @@
   color: #111827;
 }
 
+.link:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
 .item.active .link {
   color: #2563eb;
   font-weight: 500;
 }
+
+.mobileToc .list {
+  padding: 0 1rem 1rem;
+}
+

@@ -26,18 +26,18 @@ export default function PropsTable({ props }: PropsTableProps) {
         <tbody>
           {props.map((prop, idx) => (
             <tr key={idx}>
-              <td>
+              <td data-label="Prop">
                 <code className={styles.propName}>{prop.name}</code>
               </td>
-              <td>
+              <td data-label="Type">
                 <code className={styles.propType}>{prop.type}</code>
               </td>
-              <td>
+              <td data-label="Default">
                 {prop.defaultValue && (
                   <code className={styles.propDefault}>{prop.defaultValue}</code>
                 )}
               </td>
-              <td>{prop.description}</td>
+              <td data-label="Description">{prop.description}</td>
             </tr>
           ))}
         </tbody>
