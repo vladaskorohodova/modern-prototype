@@ -137,7 +137,17 @@ export default function CodeBlock({
         setCopied(false);
         resetCopiedTimeoutRef.current = null;
       }, 2000);
-    } catch {
+    } catch (error) {
+      // Disable further copy attempts and reset any "copied" state on failure.
+      if (resetCopiedTimeoutRef.current !== null) {
+        window.clearTimeout(resetCopiedTimeoutRef.current);
+        resetCopiedTimeoutRef.current = null;
+      }
+      setCopied(false);
+      setCanCopy(false);
+      // Log the error to aid debugging without exposing it in the UI.
+      // eslint-disable-next-line no-console
+      console.error('Failed to copy code to clipboard:', error);
     }
   };
 
@@ -167,20 +177,26 @@ export default function CodeBlock({
           {({ tokens, getLineProps, getTokenProps }) => (
             <pre className={styles.pre}>
               <code className={styles.code}>
-                {tokens.map((line, lineIndex) => (
-                  <span
-                    key={lineIndex}
-                    {...getLineProps({ line, key: lineIndex })}
-                    className={styles.line}
-                  >
-                    {line.map((token, tokenIndex) => (
-                      <span
-                        key={tokenIndex}
-                        {...getTokenProps({ token, key: tokenIndex })}
-                      />
-                    ))}
-                  </span>
-                ))}
+                {tokens.map((line, lineIndex) => {
+                  const lineProps = getLineProps({ line, key: lineIndex });
+                  const { className: lineClassName, ...restLineProps } = lineProps;
+                  const mergedClassName = [lineClassName, styles.line].filter(Boolean).join(' ');
+
+                  return (
+                    <span
+                      key={lineIndex}
+                      {...restLineProps}
+                      className={mergedClassName}
+                    >
+                      {line.map((token, tokenIndex) => (
+                        <span
+                          key={tokenIndex}
+                          {...getTokenProps({ token, key: tokenIndex })}
+                        />
+                      ))}
+                    </span>
+                  );
+                })}
               </code>
             </pre>
           )}
