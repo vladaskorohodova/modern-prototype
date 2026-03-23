@@ -1,8 +1,9 @@
 .sidebar {
-  position: relative;
+  position: sticky;
+  top: 60px;
   z-index: 25;
   width: 280px;
-  height: 100vh;
+  height: calc(100vh - 60px);
   overflow-y: auto;
   border-right: 1px solid #e5e7eb;
   padding: 2rem 0;

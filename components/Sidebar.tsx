@@ -63,15 +63,24 @@ const navigationItems: NavItem[] = [
 
 interface SidebarProps {
   isOpen?: boolean;
+  isMobileViewport?: boolean;
   onNavigate?: () => void;
 }
 
-export default function Sidebar({ isOpen = false, onNavigate }: SidebarProps) {
+export default function Sidebar({
+  isOpen = false,
+  isMobileViewport = false,
+  onNavigate,
+}: SidebarProps) {
+  const isHiddenMobileDrawer = isMobileViewport && !isOpen;
+
   return (
     <nav
       id="docs-sidebar"
       className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}
       aria-label="Documentation navigation"
+      aria-hidden={isHiddenMobileDrawer}
+      inert={isHiddenMobileDrawer || undefined}
     >
       {navigationItems.map((section, idx) => (
         <div key={idx} className={styles.section}>
