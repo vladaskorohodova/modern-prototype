@@ -57,7 +57,7 @@
   flex-direction: column;
   gap: 24px;
   padding: 36px;
-  max-width: 1240px;
+  max-width: 880px;
   background: #fffdfa;
 }
 
@@ -95,13 +95,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  align-items: center;
 }
 
 .ctaButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 50px;
   padding: 0 18px;
   border-radius: 999px;
   border: 1px solid transparent;
@@ -136,7 +137,7 @@
 .buttonSolid,
 .buttonOutline,
 .buttonGhost {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 16px;
   border-radius: 999px;
   font: inherit;
@@ -215,7 +216,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  min-height: 42px;
+  min-height: 44px;
   color: var(--text-primary);
 }
 
@@ -302,13 +303,29 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
 }
 
 .cardTop a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--accent-strong);
   font-size: 0.92rem;
   font-weight: 700;
+}
+
+.cardTop a:focus-visible,
+.ctaButton:focus-visible,
+.buttonSolid:focus-visible,
+.buttonOutline:focus-visible,
+.buttonGhost:focus-visible,
+.field input:focus-visible,
+.checkRow input:focus-visible,
+.cardAccordion summary:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
 }
 
 .teamRow {
@@ -352,6 +369,32 @@
 }
 
 @media (max-width: 980px) {
+  .main {
+    gap: 32px;
+    padding: 40px 24px 56px;
+  }
+
+  .copy {
+    gap: 20px;
+    padding: 28px;
+    max-width: none;
+  }
+
+  .copy h1 {
+    max-width: 16ch;
+    font-size: clamp(2.4rem, 8vw, 3.8rem);
+  }
+
+  .copy p,
+  .cardText,
+  .sectionHeader h2 {
+    max-width: none;
+  }
+
+  .sectionHeader {
+    gap: 10px;
+  }
+
   .grid,
   .teamRow,
   .metrics {
@@ -365,6 +408,7 @@
 
 @media (max-width: 640px) {
   .main {
+    gap: 24px;
     padding: 24px 16px 40px;
   }
 
@@ -378,9 +422,41 @@
     padding: 18px;
   }
 
+  .copy {
+    gap: 18px;
+  }
+
   .copy h1,
   .sectionHeader h2 {
     max-width: none;
+  }
+
+  .copy h1 {
+    font-size: clamp(2.1rem, 10vw, 3rem);
+    line-height: 0.98;
+  }
+
+  .copy p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .sectionHeader h2 {
+    font-size: clamp(1.7rem, 8vw, 2.4rem);
+  }
+
+  .card {
+    gap: 14px;
+  }
+
+  .cardTop {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cardTop a {
+    width: fit-content;
   }
 
   .buttonRow,
@@ -390,11 +466,52 @@
     align-items: stretch;
   }
 
+  .buttonStack {
+    gap: 10px;
+  }
+
+  .teamMember {
+    padding: 12px;
+  }
+
   .ctaButton,
   .buttonSolid,
   .buttonOutline,
   .buttonGhost {
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 18px 12px 32px;
+  }
+
+  .copy,
+  .card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .eyebrow,
+  .sectionEyebrow,
+  .cardLabel,
+  .panelLabel {
+    letter-spacing: 0.12em;
+    font-size: 11px;
+  }
+
+  .cardText {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .field input,
+  .ctaButton,
+  .buttonSolid,
+  .buttonOutline,
+  .buttonGhost {
+    min-height: 48px;
   }
 }
 

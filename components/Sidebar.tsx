@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import styles from './Sidebar.module.css';
 
@@ -59,9 +61,27 @@ const navigationItems: NavItem[] = [
   },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  isMobileViewport?: boolean;
+  onNavigate?: () => void;
+}
+
+export default function Sidebar({
+  isOpen = false,
+  isMobileViewport = false,
+  onNavigate,
+}: SidebarProps) {
+  const isHiddenMobileDrawer = isMobileViewport && !isOpen;
+
   return (
-    <nav className={styles.sidebar}>
+    <nav
+      id="docs-sidebar"
+      className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}
+      aria-label="Documentation navigation"
+      aria-hidden={isHiddenMobileDrawer}
+      inert={isHiddenMobileDrawer || undefined}
+    >
       {navigationItems.map((section, idx) => (
         <div key={idx} className={styles.section}>
           <h3 className={styles.sectionTitle}>{section.title}</h3>
@@ -69,7 +89,11 @@ export default function Sidebar() {
             <ul className={styles.navList}>
               {section.items.map((item, itemIdx) => (
                 <li key={itemIdx}>
-                  <Link href={item.href || '#'} className={styles.navLink}>
+                  <Link
+                    href={item.href || '#'}
+                    className={styles.navLink}
+                    onClick={onNavigate}
+                  >
                     {item.title}
                   </Link>
                 </li>

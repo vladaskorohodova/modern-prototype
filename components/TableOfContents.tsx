@@ -10,7 +10,11 @@ interface TocItem {
   level: number;
 }
 
-export default function TableOfContents() {
+interface TableOfContentsProps {
+  mode?: 'desktop' | 'mobile';
+}
+
+export default function TableOfContents({ mode = 'desktop' }: TableOfContentsProps) {
   const pathname = usePathname();
 
   const [headings, setHeadings] = useState<TocItem[]>([]);
@@ -50,8 +54,34 @@ export default function TableOfContents() {
 
   if (headings.length === 0) return null;
 
+  if (mode === 'mobile') {
+    return (
+      <details
+        className={styles.mobileToc}
+        role="navigation"
+        aria-label="On this page"
+      >
+        <summary className={styles.mobileSummary}>On this page</summary>
+        <ul className={styles.list}>
+          {headings.map((heading) => (
+            <li
+              key={heading.id}
+              className={`${styles.item} ${
+                heading.level === 3 ? styles.nested : ''
+              } ${activeId === heading.id ? styles.active : ''}`}
+            >
+              <a href={`#${heading.id}`} className={styles.link}>
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    );
+  }
+
   return (
-    <nav className={styles.toc}>
+    <nav className={styles.toc} aria-label="On this page">
       <h4 className={styles.title}>On this page</h4>
       <ul className={styles.list}>
         {headings.map((heading) => (

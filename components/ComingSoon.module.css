@@ -54,3 +54,29 @@
 .linkBack a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .container h1 {
+    font-size: 1.9rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .planned {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h1 {
+    font-size: 1.7rem;
+  }
+
+  .planned {
+    border-radius: 14px;
+    padding: 1rem;
+  }
+}
