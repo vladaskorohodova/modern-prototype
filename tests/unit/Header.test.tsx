@@ -23,22 +23,24 @@ function renderHeader(node: ReactNode) {
   return render(node, { wrapper: ThemeWrapper });
 }
 
+function mockPreferredTheme(theme: 'light' | 'dark') {
+  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+    matches: query === '(prefers-color-scheme: dark)' ? theme === 'dark' : false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
+
 describe('Header', () => {
   beforeEach(() => {
     window.localStorage.clear();
     document.documentElement.setAttribute('data-theme', 'light');
-
-    // Ensure a deterministic prefers-color-scheme value for ThemeProvider
-    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
-      matches: query === '(prefers-color-scheme: dark)' ? false : false,
-      media: query,
-      onchange: null,
-      addListener: vi.fn(), // deprecated but sometimes used
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    }));
+    mockPreferredTheme('light');
   });
 
   it('renders the home link and GitHub link', () => {
@@ -93,5 +95,24 @@ describe('Header', () => {
     expect(toggle).toHaveAttribute('aria-pressed', 'true');
     expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
     expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark');
+  });
+
+  it('restores a saved theme from localStorage on initialization', () => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, 'dark');
+
+    renderHeader(<Header />);
+
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    expect(screen.getByRole('button', { name: 'Toggle color theme' })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('ignores invalid saved themes and falls back to the preferred theme', () => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, 'sepia');
+    mockPreferredTheme('dark');
+
+    renderHeader(<Header />);
+
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    expect(screen.getByRole('button', { name: 'Toggle color theme' })).toHaveAttribute('aria-pressed', 'true');
   });
 });

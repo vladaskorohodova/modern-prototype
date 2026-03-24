@@ -8,7 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { THEME_STORAGE_KEY, type ThemeMode } from './theme';
+import { THEME_STORAGE_KEY, isThemeMode, type ThemeMode } from './theme';
 
 interface ThemeContextValue {
   theme: ThemeMode;
@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
     try {
       const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-      if (savedTheme === 'light' || savedTheme === 'dark') {
+      if (isThemeMode(savedTheme)) {
         nextTheme = savedTheme;
       }
     } catch {
