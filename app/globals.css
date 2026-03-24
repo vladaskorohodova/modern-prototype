@@ -72,6 +72,11 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
+}
 a {
   color: inherit;
   text-decoration: none;

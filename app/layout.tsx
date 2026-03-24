@@ -14,7 +14,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
+    <html lang="en">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = window.localStorage.getItem('theme');
+                  if (!theme) {
+                    var mql = window.matchMedia('(prefers-color-scheme: dark)');
+                    theme = mql.matches ? 'dark' : 'light';
+                  }
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch (e) {
+                  // If anything goes wrong, default to light without blocking render.
+                  document.documentElement.setAttribute('data-theme', 'light');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body>
         <ThemeProvider>
           {children}
