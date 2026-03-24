@@ -12,7 +12,7 @@ export default function BasicCheckBoxDemo() {
       </label>
 
       <label
-        style={{ display: 'flex', gap: 10, alignItems: 'center', color: '#6b7280' }}
+        style={{ display: 'flex', gap: 10, alignItems: 'center', color: 'var(--color-text-muted)' }}
       >
         <input type="checkbox" disabled defaultChecked />
         <span style={{ fontSize: 14 }}>Disabled option</span>

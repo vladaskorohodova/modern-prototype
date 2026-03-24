@@ -8,11 +8,11 @@
   gap: 0.5rem;
   min-height: 44px;
   padding: 0 0.875rem;
-  border: 1px solid rgba(15, 118, 110, 0.18);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: #0f766e;
-  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+  background: var(--color-surface-elevated);
+  color: var(--color-accent);
+  box-shadow: 0 14px 28px var(--color-shadow);
   backdrop-filter: blur(10px);
   font: inherit;
   font-size: 0.875rem;
@@ -21,11 +21,11 @@
 }
 
 .button:hover {
-  background: rgba(255, 255, 255, 0.98);
+  background: color-mix(in srgb, var(--color-surface) 88%, var(--color-accent-soft));
 }
 
 .button:focus-visible {
-  outline: 2px solid #0f766e;
+  outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }
 
