@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { THEME_STORAGE_KEY } from '@/components/theme';
 import { githubRepoUrl } from '@/site-config.mjs';
 
 vi.mock('next/link', () => ({
@@ -14,12 +15,12 @@ vi.mock('next/link', () => ({
   ),
 }));
 
+function ThemeWrapper({ children }: { children: ReactNode }) {
+  return <ThemeProvider>{children}</ThemeProvider>;
+}
+
 function renderHeader(node: ReactNode) {
-  return render(
-    <ThemeProvider>
-      {node}
-    </ThemeProvider>
-  );
+  return render(node, { wrapper: ThemeWrapper });
 }
 
 describe('Header', () => {
@@ -50,13 +51,11 @@ describe('Header', () => {
     expect(screen.queryByRole('button', { name: 'Open navigation menu' })).not.toBeInTheDocument();
 
     rerender(
-      <ThemeProvider>
-        <Header
-          showDocsMenu
-          isDocsMenuOpen
-          onDocsMenuToggle={onDocsMenuToggle}
-        />
-      </ThemeProvider>
+      <Header
+        showDocsMenu
+        isDocsMenuOpen
+        onDocsMenuToggle={onDocsMenuToggle}
+      />
     );
 
     const menuButton = screen.getByLabelText('Close navigation menu', {
@@ -81,6 +80,6 @@ describe('Header', () => {
 
     expect(toggle).toHaveAttribute('aria-pressed', 'true');
     expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
-    expect(window.localStorage.getItem('modern-prototype-theme')).toBe('dark');
+    expect(window.localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark');
   });
 });

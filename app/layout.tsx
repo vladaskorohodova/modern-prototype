@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ScrollToTopButton from '@/components/ScrollToTopButton';
+import { THEME_STORAGE_KEY } from '@/components/theme';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import "./globals.css";
 
@@ -21,7 +22,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var theme = window.localStorage.getItem('theme');
+                  var theme = window.localStorage.getItem('${THEME_STORAGE_KEY}');
                   if (!theme) {
                     var mql = window.matchMedia('(prefers-color-scheme: dark)');
                     theme = mql.matches ? 'dark' : 'light';

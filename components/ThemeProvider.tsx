@@ -8,10 +8,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-
-export type ThemeMode = 'light' | 'dark';
-
-const STORAGE_KEY = 'modern-prototype-theme';
+import { THEME_STORAGE_KEY, type ThemeMode } from './theme';
 
 interface ThemeContextValue {
   theme: ThemeMode;
@@ -39,10 +36,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
-    const nextTheme = savedTheme === 'light' || savedTheme === 'dark'
-      ? savedTheme
-      : getPreferredTheme();
+    let nextTheme = getPreferredTheme();
+
+    try {
+      const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        nextTheme = savedTheme;
+      }
+    } catch {
+      nextTheme = getPreferredTheme();
+    }
 
     document.documentElement.setAttribute('data-theme', nextTheme);
     setThemeState(nextTheme);
@@ -55,7 +58,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
 
     document.documentElement.setAttribute('data-theme', theme);
-    window.localStorage.setItem(STORAGE_KEY, theme);
+
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      // Ignore storage failures so the toggle continues to work in restricted environments.
+    }
   }, [isReady, theme]);
 
   const value = useMemo<ThemeContextValue>(() => ({
