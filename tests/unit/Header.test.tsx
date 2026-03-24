@@ -27,6 +27,18 @@ describe('Header', () => {
   beforeEach(() => {
     window.localStorage.clear();
     document.documentElement.setAttribute('data-theme', 'light');
+
+    // Ensure a deterministic prefers-color-scheme value for ThemeProvider
+    window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+      matches: query === '(prefers-color-scheme: dark)' ? false : false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(), // deprecated but sometimes used
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    }));
   });
 
   it('renders the home link and GitHub link', () => {
