@@ -2,10 +2,10 @@ import { expect, test } from '@playwright/test';
 
 test('core routes load with the shared header', async ({ page }) => {
   const routes = [
-    '/',
-    '/docs/',
-    '/docs/components/button/',
-    '/docs/get-started/installation/',
+    '',
+    'docs/',
+    'docs/components/button/',
+    'docs/get-started/installation/',
   ];
 
   for (const route of routes) {
@@ -18,7 +18,7 @@ test('core routes load with the shared header', async ({ page }) => {
 });
 
 test('home link returns to landing from docs pages', async ({ page }) => {
-  await page.goto('/docs/components/button/');
+  await page.goto('docs/components/button/');
 
   await expect(page.getByRole('heading', { name: 'Button Overview' })).toBeVisible();
 
@@ -32,7 +32,7 @@ test('home link returns to landing from docs pages', async ({ page }) => {
 
 test('mobile docs navigation closes from the header control and after navigation', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/docs/components/button/');
+  await page.goto('docs/components/button/');
 
   const docsNavigation = page.locator('#docs-sidebar');
 
@@ -51,7 +51,7 @@ test('mobile docs navigation closes from the header control and after navigation
 });
 
 test('scroll-to-top appears after scrolling and returns the page near the top', async ({ page }) => {
-  await page.goto('/docs/components/button/');
+  await page.goto('docs/components/button/');
 
   await page.evaluate(() => window.scrollTo(0, 900));
   await expect(page.getByRole('button', { name: 'Go to top' })).toBeVisible();
@@ -63,7 +63,7 @@ test('scroll-to-top appears after scrolling and returns the page near the top', 
 
 test('docs code blocks render highlighted markup and support copy', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-  await page.goto('/docs/components/button/');
+  await page.goto('docs/components/button/');
 
   const staticCodeBlock = page.locator('pre code').first();
   await expect(staticCodeBlock).toContainText("import { Button } from 'modern-react-knowledge';");
