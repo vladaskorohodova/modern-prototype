@@ -23,14 +23,13 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = window.localStorage.getItem('${THEME_STORAGE_KEY}');
-                  if (theme !== 'light' && theme !== 'dark') {
-                    var mql = window.matchMedia('(prefers-color-scheme: dark)');
-                    theme = mql.matches ? 'dark' : 'light';
+                  // Only apply explicit stored themes; all fallback logic
+                  // (including system preference and defaults) is owned by ThemeProvider.
+                  if (theme === 'light' || theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', theme);
                   }
-                  document.documentElement.setAttribute('data-theme', theme);
                 } catch (e) {
-                  // If anything goes wrong, default to light without blocking render.
-                  document.documentElement.setAttribute('data-theme', 'light');
+                  // Swallow errors; ThemeProvider will resolve the theme after hydration.
                 }
               })();
             `,
