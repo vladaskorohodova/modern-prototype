@@ -7,7 +7,7 @@ function Avatar({ size, label }: { size: number; label: string }) {
         width: size,
         height: size,
         borderRadius: 999,
-        background: '#111827',
+        background: 'linear-gradient(135deg, var(--color-accent-strong), var(--color-code-surface))',
         color: 'white',
         display: 'grid',
         placeItems: 'center',
@@ -27,7 +27,7 @@ export default function BasicAvatarDemo() {
       <Avatar size={32} label="VS" />
       <Avatar size={40} label="VS" />
       <Avatar size={56} label="VS" />
-      <span style={{ color: '#6b7280', fontSize: 14 }}>
+      <span style={{ color: 'var(--color-text-muted)', fontSize: 14 }}>
         Fallback initials when no image is available
       </span>
     </div>

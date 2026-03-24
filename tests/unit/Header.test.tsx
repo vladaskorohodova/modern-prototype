@@ -1,8 +1,9 @@
 import type { ReactNode } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Header from '@/components/Header';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { githubRepoUrl } from '@/site-config.mjs';
 
 vi.mock('next/link', () => ({
@@ -13,19 +14,32 @@ vi.mock('next/link', () => ({
   ),
 }));
 
+function renderHeader(node: ReactNode) {
+  return render(
+    <ThemeProvider>
+      {node}
+    </ThemeProvider>
+  );
+}
+
 describe('Header', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    document.documentElement.setAttribute('data-theme', 'light');
+  });
+
   it('renders the home link and GitHub link', () => {
-    render(<Header />);
+    renderHeader(<Header />);
 
     expect(screen.getByRole('link', { name: 'Modern React Library' })).toHaveAttribute('href', '/');
     expect(screen.getByRole('link', { name: 'View project on GitHub' })).toHaveAttribute('href', githubRepoUrl);
+    expect(screen.getByRole('button', { name: 'Toggle color theme' })).toBeInTheDocument();
   });
 
   it('renders a docs menu button only when requested and wires clicks', async () => {
     const onDocsMenuToggle = vi.fn();
-    const user = userEvent.setup();
 
-    const { rerender } = render(
+    const { rerender } = renderHeader(
       <Header
         showDocsMenu={false}
         isDocsMenuOpen={false}
@@ -36,11 +50,13 @@ describe('Header', () => {
     expect(screen.queryByRole('button', { name: 'Open navigation menu' })).not.toBeInTheDocument();
 
     rerender(
-      <Header
-        showDocsMenu
-        isDocsMenuOpen
-        onDocsMenuToggle={onDocsMenuToggle}
-      />
+      <ThemeProvider>
+        <Header
+          showDocsMenu
+          isDocsMenuOpen
+          onDocsMenuToggle={onDocsMenuToggle}
+        />
+      </ThemeProvider>
     );
 
     const menuButton = screen.getByLabelText('Close navigation menu', {
@@ -51,5 +67,20 @@ describe('Header', () => {
 
     fireEvent.click(menuButton);
     expect(onDocsMenuToggle).toHaveBeenCalledTimes(1);
+  });
+
+  it('toggles the app theme and persists the selection', async () => {
+    const user = userEvent.setup();
+
+    renderHeader(<Header />);
+
+    const toggle = screen.getByRole('button', { name: 'Toggle color theme' });
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+
+    await user.click(toggle);
+
+    expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    expect(document.documentElement).toHaveAttribute('data-theme', 'dark');
+    expect(window.localStorage.getItem('modern-prototype-theme')).toBe('dark');
   });
 });

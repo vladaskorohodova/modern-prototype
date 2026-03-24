@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { githubRepoUrl } from '@/site-config.mjs';
+import ThemeToggle from './ThemeToggle';
 import styles from './Header.module.css';
 
 interface HeaderProps {
@@ -42,6 +43,7 @@ export default function Header({
       </h1>
 
       <div className={styles.actions}>
+        <ThemeToggle />
         <a
           href={githubRepoUrl}
           className={styles.githubButton}
