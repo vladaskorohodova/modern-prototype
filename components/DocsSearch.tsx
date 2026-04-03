@@ -10,11 +10,10 @@ interface SearchResult extends DocsSearchEntry {
 }
 
 function searchDocs(query: string): SearchResult[] {
-  if (!query.trim()) {
+  const normalizedQuery = query.trim().toLowerCase();
+  if (!normalizedQuery) {
     return [];
   }
-
-  const lowerQuery = query.toLowerCase();
 
   const ranked = new Map<string, SearchResult>();
 
@@ -26,15 +25,15 @@ function searchDocs(query: string): SearchResult[] {
     let matchType: 'titleExact' | 'titleStart' | 'titleContains' | 'description' | null = null;
 
     // Rank matches by specificity
-    if (lowerTitle === lowerQuery) {
+    if (lowerTitle === normalizedQuery) {
       matchType = 'titleExact';
-    } else if (lowerTitle.startsWith(lowerQuery)) {
+    } else if (lowerTitle.startsWith(normalizedQuery)) {
       matchType = 'titleStart';
-    } else if (lowerTitle.includes(lowerQuery)) {
+    } else if (lowerTitle.includes(normalizedQuery)) {
       matchType = 'titleContains';
-    } else if (lowerDesc.includes(lowerQuery)) {
+    } else if (lowerDesc.includes(normalizedQuery)) {
       matchType = 'description';
-    } else if (lowerKeywords.some((k) => k.includes(lowerQuery))) {
+    } else if (lowerKeywords.some((k) => k.includes(normalizedQuery))) {
       matchType = 'description'; // Keyword matches treated as description match
     }
 
@@ -48,7 +47,7 @@ function searchDocs(query: string): SearchResult[] {
   }
 
   // Sort by match type (exact > start > contains > description)
-  const matchTypeOrder = {
+  const matchTypeOrder: Record<SearchResult['matchType'], number> = {
     titleExact: 0,
     titleStart: 1,
     titleContains: 2,
@@ -90,15 +89,18 @@ export default function DocsSearch({ onNavigate }: DocsSearchProps) {
           onFocus={() => setIsOpen(true)}
           className={styles.input}
           aria-label="Search documentation"
+          aria-autocomplete="list"
+          aria-controls={isOpen && query.trim() !== '' ? 'docs-search-results' : undefined}
+          aria-expanded={isOpen && query.trim() !== ''}
         />
       </div>
 
       {isOpen && query.trim() !== '' && (
-        <div className={styles.resultsPanel} id="docs-search-results">
+        <div className={styles.resultsPanel} id="docs-search-results" role="listbox">
           {results.length > 0 ? (
             <ul className={styles.resultsList}>
               {results.map((result) => (
-                <li key={result.href}>
+                <li key={result.href} role="option">
                   <Link href={result.href} onClick={handleNavigate} className={styles.resultLink}>
                     <div className={styles.resultTitle}>{result.title}</div>
                     <div className={styles.resultMeta}>
