@@ -199,3 +199,15 @@
     padding: 0.875rem;
   }
 }
+
+.searchContainer {
+  margin-bottom: 2rem;
+  max-width: 500px;
+}
+
+@media (max-width: 640px) {
+  .searchContainer {
+    margin-bottom: 1.5rem;
+  }
+}
+

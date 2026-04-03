@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
+import DocsSearch from '@/components/DocsSearch';
 import TableOfContents from '@/components/TableOfContents';
 import styles from '@/app/docs/layout.module.css';
 
@@ -60,6 +61,9 @@ export default function DocsShell({ children }: DocsShellProps) {
           />
         ) : null}
         <main className={styles.main}>
+          <div className={styles.searchContainer}>
+            <DocsSearch onNavigate={() => setIsSidebarOpen(false)} />
+          </div>
           {isMobileViewport && (
             <div className={styles.mobileTocWrap}>
               <TableOfContents mode="mobile" />
