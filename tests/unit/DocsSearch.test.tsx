@@ -47,7 +47,7 @@ describe('DocsSearch', () => {
 
     await user.type(input, 'Grid');
 
-    // Should match "Grid Overview", "Grid-Bind Data", etc.
+    // Should match "Grid Overview", "Grid - Bind Data", etc.
     const results = screen.getAllByText(/Grid/);
     expect(results.length).toBeGreaterThanOrEqual(1);
   });
@@ -57,9 +57,31 @@ describe('DocsSearch', () => {
     render(<DocsSearch />);
     const input = screen.getByRole('textbox', { name: /search documentation/i });
 
-    await user.type(input, 'accessibility');
+    const descriptionMatchEntry = docsSearchIndex.find((entry) => {
+      const title = entry.title.toLowerCase();
+      const descriptionTokens = (entry.description ?? '')
+        .toLowerCase()
+        .match(/[a-z0-9-]{3,}/g) ?? [];
+      const keywordTokens = (entry.keywords ?? []).map((keyword) => keyword.toLowerCase());
+      return [...descriptionTokens, ...keywordTokens].some((token) => !title.includes(token));
+    });
 
-    const resultText = screen.getByText('Accessibility');
+    expect(descriptionMatchEntry).toBeDefined();
+
+    const title = descriptionMatchEntry!.title.toLowerCase();
+    const descriptionTokens = (descriptionMatchEntry!.description ?? '')
+      .toLowerCase()
+      .match(/[a-z0-9-]{3,}/g) ?? [];
+    const keywordTokens = (descriptionMatchEntry!.keywords ?? []).map((keyword) => keyword.toLowerCase());
+    const descriptionOnlyQuery = [...descriptionTokens, ...keywordTokens].find(
+      (token) => !title.includes(token),
+    );
+
+    expect(descriptionOnlyQuery).toBeDefined();
+
+    await user.type(input, descriptionOnlyQuery!);
+
+    const resultText = screen.getByText(descriptionMatchEntry!.title);
     expect(resultText).toBeInTheDocument();
   });
 

@@ -62,7 +62,7 @@
   transition: background-color 0.15s ease;
 }
 
-.resultLink:last-child {
+.resultsList li:last-child .resultLink {
   border-bottom: none;
 }
 

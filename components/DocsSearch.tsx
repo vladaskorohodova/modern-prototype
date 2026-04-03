@@ -16,7 +16,6 @@ function searchDocs(query: string): SearchResult[] {
 
   const lowerQuery = query.toLowerCase();
 
-  const results: SearchResult[] = [];
   const ranked = new Map<string, SearchResult>();
 
   for (const entry of docsSearchIndex) {
@@ -91,18 +90,15 @@ export default function DocsSearch({ onNavigate }: DocsSearchProps) {
           onFocus={() => setIsOpen(true)}
           className={styles.input}
           aria-label="Search documentation"
-          aria-autocomplete="list"
-          aria-controls={isOpen ? 'docs-search-results' : undefined}
-          aria-expanded={isOpen && query.trim() !== ''}
         />
       </div>
 
       {isOpen && query.trim() !== '' && (
-        <div className={styles.resultsPanel} id="docs-search-results" role="listbox">
+        <div className={styles.resultsPanel} id="docs-search-results">
           {results.length > 0 ? (
-            <ul className={styles.resultsList} role="presentation">
+            <ul className={styles.resultsList}>
               {results.map((result) => (
-                <li key={result.href} role="option">
+                <li key={result.href}>
                   <Link href={result.href} onClick={handleNavigate} className={styles.resultLink}>
                     <div className={styles.resultTitle}>{result.title}</div>
                     <div className={styles.resultMeta}>

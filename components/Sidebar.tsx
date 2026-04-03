@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { docsNavigation, NavItem } from '@/content/docs/navigation';
+import { docsNavigation } from '@/content/docs/navigation';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
