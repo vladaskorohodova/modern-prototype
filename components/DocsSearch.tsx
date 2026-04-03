@@ -96,9 +96,9 @@ export default function DocsSearch({ onNavigate }: DocsSearchProps) {
       </div>
 
       {isOpen && query.trim() !== '' && (
-        <div className={styles.resultsPanel} id="docs-search-results" role="listbox">
+        <div className={styles.resultsPanel} id="docs-search-results">
           {results.length > 0 ? (
-            <ul className={styles.resultsList}>
+            <ul role="listbox" className={styles.resultsList}>
               {results.map((result) => (
                 <li key={result.href} role="option">
                   <Link href={result.href} onClick={handleNavigate} className={styles.resultLink}>
@@ -112,7 +112,7 @@ export default function DocsSearch({ onNavigate }: DocsSearchProps) {
               ))}
             </ul>
           ) : (
-            <div className={styles.emptyState}>No matching docs topics</div>
+            <div role="status" className={styles.emptyState}>No matching docs topics</div>
           )}
         </div>
       )}

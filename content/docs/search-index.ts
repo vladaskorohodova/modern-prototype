@@ -1,3 +1,5 @@
+import { docsNavigation } from './navigation';
+
 export type DocsSearchEntry = {
   title: string;
   description: string;
@@ -6,136 +8,90 @@ export type DocsSearchEntry = {
   keywords?: string[];
 };
 
-export const docsSearchIndex: DocsSearchEntry[] = [
-  // Get Started
-  {
-    title: 'Installation',
+/**
+ * Per-page enrichment: description and optional search keywords.
+ * Titles, hrefs, and sections are derived from docsNavigation automatically,
+ * so adding a new nav entry requires only adding a description here.
+ */
+const enrichment: Record<string, { description: string; keywords?: string[] }> = {
+  '/docs/get-started/installation': {
     description: 'Get started with the Modern React Library',
-    href: '/docs/get-started/installation',
-    section: 'Get Started',
   },
-  {
-    title: 'Quick start',
+  '/docs/get-started/quick-start': {
     description: 'This guide will walk you through creating your first application with the Modern React Library in just a few minutes.',
-    href: '/docs/get-started/quick-start',
-    section: 'Get Started',
   },
-
-  // Concepts
-  {
-    title: 'Accessibility',
+  '/docs/concepts/accessibility': {
     description: 'Building accessible applications with the Modern React Library',
-    href: '/docs/concepts/accessibility',
-    section: 'Concepts',
     keywords: ['a11y', 'wcag', 'aria'],
   },
-  {
-    title: 'Performance',
-    description: 'Learn how to optimize your application performance with the Modern React Library\'s built-in performance features and best practices.',
-    href: '/docs/concepts/performance',
-    section: 'Concepts',
+  '/docs/concepts/performance': {
+    description: "Learn how to optimize your application performance with the Modern React Library's built-in performance features and best practices.",
   },
-  {
-    title: 'Theming',
+  '/docs/concepts/theming': {
     description: 'Customize the look and feel of all components with our powerful theming system built on CSS variables and design tokens.',
-    href: '/docs/concepts/theming',
-    section: 'Concepts',
     keywords: ['theme', 'dark mode', 'css variables'],
   },
-
-  // Grid
-  {
-    title: 'Grid Overview',
+  '/docs/grid/overview': {
     description: 'The Grid component is a powerful data table for displaying, sorting, filtering, and editing tabular data with excellent performance.',
-    href: '/docs/grid/overview',
-    section: 'Grid',
     keywords: ['table', 'data grid', 'datagrid'],
   },
-  {
-    title: 'Grid - Bind Data',
+  '/docs/grid/bind-data': {
     description: 'Learn how to bind various data sources to the Grid component, including arrays, APIs, and real-time data streams.',
-    href: '/docs/grid/bind-data',
-    section: 'Grid',
   },
-  {
-    title: 'Grid - Sorting',
+  '/docs/grid/sorting': {
     description: 'Configure single and multi-column sorting with custom sort functions and sort indicators.',
-    href: '/docs/grid/sorting',
-    section: 'Grid',
   },
-  {
-    title: 'Grid - API Reference',
+  '/docs/grid/api-reference': {
     description: 'Complete API reference for the Grid component including all props, methods, and events.',
-    href: '/docs/grid/api-reference',
-    section: 'Grid',
   },
-
-  // Scheduler
-  {
-    title: 'Scheduler Overview',
+  '/docs/scheduler/overview': {
     description: 'The Scheduler component helps you display and manage time-based events with drag-and-drop, recurring events, and conflict resolution.',
-    href: '/docs/scheduler/overview',
-    section: 'Scheduler',
     keywords: ['calendar', 'events', 'scheduling'],
   },
-  {
-    title: 'Scheduler - Bind Data',
+  '/docs/scheduler/bind-data': {
     description: 'Learn how to bind event data to the Scheduler component from various sources including calendars, databases, and APIs.',
-    href: '/docs/scheduler/bind-data',
-    section: 'Scheduler',
   },
-  {
-    title: 'Scheduler - Resolve Overlapping',
+  '/docs/scheduler/resolve-overlapping': {
     description: 'Handle overlapping events in the Scheduler with built-in conflict resolution strategies.',
-    href: '/docs/scheduler/resolve-overlapping',
-    section: 'Scheduler',
   },
-  {
-    title: 'Scheduler - API Reference',
+  '/docs/scheduler/api-reference': {
     description: 'Complete API reference for the Scheduler component including all props, methods, and events.',
-    href: '/docs/scheduler/api-reference',
-    section: 'Scheduler',
   },
-
-  // Components
-  {
-    title: 'Accordion Component',
+  '/docs/components/accordion': {
     description: 'A collapsible content component for grouping related information',
-    href: '/docs/components/accordion',
-    section: 'Components',
   },
-  {
-    title: 'Avatar Component',
+  '/docs/components/avatar': {
     description: 'A user identity component that supports images and fallbacks',
-    href: '/docs/components/avatar',
-    section: 'Components',
   },
-  {
-    title: 'Button Component',
+  '/docs/components/button': {
     description: 'A versatile button component with multiple variants',
-    href: '/docs/components/button',
-    section: 'Components',
   },
-  {
-    title: 'CheckBox Component',
+  '/docs/components/check-box': {
     description: 'A checkbox component for boolean choices and opt-in settings',
-    href: '/docs/components/check-box',
-    section: 'Components',
     keywords: ['checkbox', 'check-box'],
   },
-  {
-    title: 'TextBox Component',
+  '/docs/components/text-box': {
     description: 'A text input component for forms with consistent states and accessibility',
-    href: '/docs/components/text-box',
-    section: 'Components',
     keywords: ['textbox', 'input', 'form'],
   },
-
-  // Releases
-  {
-    title: 'Release v0.1.0',
+  '/docs/releases/v0-1-0': {
     description: 'First release of the Modern React Library',
-    href: '/docs/releases/v0-1-0',
-    section: 'Releases',
   },
-];
+};
+
+/**
+ * Flat list of all searchable docs pages.
+ * Titles, hrefs, and section labels come from docsNavigation (single source of truth).
+ * Descriptions and keywords are enriched from the map above.
+ */
+export const docsSearchIndex: DocsSearchEntry[] = docsNavigation.flatMap((section) =>
+  (section.items ?? [])
+    .filter((item) => item.href)
+    .map((item) => ({
+      title: item.title,
+      href: item.href!,
+      section: section.title,
+      description: enrichment[item.href!]?.description ?? '',
+      keywords: enrichment[item.href!]?.keywords,
+    }))
+);

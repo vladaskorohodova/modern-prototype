@@ -1,8 +1,18 @@
+import type { ReactNode } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import DocsSearch from '@/components/DocsSearch';
 import { docsSearchIndex } from '@/content/docs/search-index';
+import { docsNavigation } from '@/content/docs/navigation';
+
+vi.mock('next/link', () => ({
+  default: ({ href, children, ...props }: { href?: string; children?: ReactNode; [key: string]: unknown }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
 
 describe('DocsSearch', () => {
   it('renders a search input with proper accessibility attributes', () => {
@@ -34,9 +44,9 @@ describe('DocsSearch', () => {
     render(<DocsSearch />);
     const input = screen.getByRole('textbox', { name: /search documentation/i });
 
-    await user.type(input, 'Button Component');
+    await user.type(input, 'Button');
 
-    const resultLink = screen.getByText('Button Component');
+    const resultLink = screen.getByText('Button');
     expect(resultLink).toBeInTheDocument();
   });
 
@@ -92,7 +102,7 @@ describe('DocsSearch', () => {
 
     await user.type(input, 'BUTTON');
 
-    const resultLink = screen.getByText('Button Component');
+    const resultLink = screen.getByText('Button');
     expect(resultLink).toBeInTheDocument();
   });
 
@@ -103,8 +113,8 @@ describe('DocsSearch', () => {
 
     await user.type(input, 'nonexistenttopic');
 
-    const emptyState = screen.getByText('No matching docs topics');
-    expect(emptyState).toBeInTheDocument();
+    const emptyState = screen.getByRole('status');
+    expect(emptyState).toHaveTextContent('No matching docs topics');
   });
 
   it('ranks exact title matches higher than partial matches', async () => {
@@ -112,11 +122,15 @@ describe('DocsSearch', () => {
     render(<DocsSearch />);
     const input = screen.getByRole('textbox', { name: /search documentation/i });
 
-    await user.type(input, 'button');
+    await user.type(input, 'over');
 
     const results = screen.getAllByRole('option');
-    // "Button Component" should be first because it's a title match
-    expect(results[0]).toHaveTextContent('Button Component');
+    // Both "Grid > Overview" and "Scheduler > Overview" have title "Overview" (titleExact)
+    // They must all appear before any titleContains or description-only matches
+    const titles = results.map((el) => el.querySelector('div')?.textContent ?? '');
+    const firstNonOverview = titles.findIndex((t) => t !== 'Overview');
+    const lastOverview = titles.lastIndexOf('Overview');
+    expect(lastOverview).toBeLessThan(firstNonOverview === -1 ? titles.length : firstNonOverview);
   });
 
   it('hides results panel when clicking a result', async () => {
@@ -126,35 +140,21 @@ describe('DocsSearch', () => {
     const input = screen.getByRole('textbox', { name: /search documentation/i });
 
     await user.type(input, 'button');
-    const resultLink = screen.getByText('Button Component');
+    const resultLink = screen.getByText('Button');
     await user.click(resultLink);
 
     expect(handleNavigate).toHaveBeenCalled();
     expect(input).toHaveValue('');
   });
 
-  it('search index contains all documented pages', () => {
-    const expectedPages = [
-      'Button Component',
-      'Accordion Component',
-      'Avatar Component',
-      'CheckBox Component',
-      'TextBox Component',
-      'Accessibility',
-      'Performance',
-      'Theming',
-      'Installation',
-      'Quick start',
-      'Grid Overview',
-      'Scheduler Overview',
-      'Release v0.1.0',
-    ];
+  it('every navigation page has a corresponding search-index entry', () => {
+    const navHrefs = docsNavigation.flatMap((section) =>
+      (section.items ?? []).filter((item) => item.href).map((item) => item.href!)
+    );
 
-    expectedPages.forEach((pageName) => {
-      const found = docsSearchIndex.find(
-        (entry) => entry.title.toLowerCase() === pageName.toLowerCase()
-      );
-      expect(found).toBeDefined();
+    navHrefs.forEach((href) => {
+      const found = docsSearchIndex.find((entry) => entry.href === href);
+      expect(found, `Missing search-index entry for ${href}`).toBeDefined();
     });
   });
 
