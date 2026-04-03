@@ -9,9 +9,10 @@ export type DocsSearchEntry = {
 };
 
 /**
- * Per-page enrichment: description and optional search keywords.
- * Titles, hrefs, and sections are derived from docsNavigation automatically,
- * so adding a new nav entry requires only adding a description here.
+ * Optional per-page enrichment: description and search keywords.
+ * Titles, hrefs, and sections are derived from docsNavigation automatically.
+ * Add an entry here to improve search metadata for a page, but pages without
+ * enrichment are still included in the search index.
  */
 const enrichment: Record<string, { description: string; keywords?: string[] }> = {
   '/docs/get-started/installation': {

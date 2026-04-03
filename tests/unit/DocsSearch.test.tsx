@@ -125,8 +125,8 @@ describe('DocsSearch', () => {
     await user.type(input, 'over');
 
     const results = screen.getAllByRole('option');
-    // Both "Grid > Overview" and "Scheduler > Overview" have title "Overview" (titleExact)
-    // They must all appear before any titleContains or description-only matches
+    // Both "Grid > Overview" and "Scheduler > Overview" match "over" via title prefix matching
+    // (`startsWith` / `titleStart`), so they must appear before titleContains or description-only matches
     const titles = results.map((el) => el.querySelector('div')?.textContent ?? '');
     const firstNonOverview = titles.findIndex((t) => t !== 'Overview');
     const lastOverview = titles.lastIndexOf('Overview');
