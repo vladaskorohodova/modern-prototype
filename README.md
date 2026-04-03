@@ -48,7 +48,7 @@ npm run dev
 ```
 modern-prototype/
 ├── app/
-│   ├── docs/                          # Documentation pages (24 routes)
+│   ├── docs/                          # Documentation pages (20 routes)
 │   │   ├── get-started/
 │   │   │   ├── installation/          # ✓ MDX page
 │   │   │   └── quick-start/           # Stub
@@ -116,7 +116,7 @@ modern-prototype/
 | `/docs/components/text-box` | Text input demo, props table |
 | `/docs/releases/v0-1-0` | Release notes |
 
-### Stub pages (16)
+### Stub pages (11)
 
 All stubs use the `ComingSoon` component with a description, planned sections list, and a navigation link. Stubbed sections: Quick Start, Performance, Theming, Grid (4 pages), Scheduler (4 pages).
 
@@ -127,8 +127,8 @@ All stubs use the `ComingSoon` component with a description, planned sections li
 - **DocsShell**: Docs layout wrapper — composes sidebar, main content, TOC, and search
 - **Header**: Top bar with site title, docs menu toggle (mobile), theme toggle, and GitHub link
 - **Sidebar**: Collapsible navigation driven by `content/docs/navigation.ts`
-- **TableOfContents**: Reads `<h2>` headings from the active page; shown in desktop sidebar and inline on mobile
-- **ScrollToTopButton**: Floating button that appears after 300px of scroll
+- **TableOfContents**: Reads `<h2>` and `<h3>` headings from the active page; shown in desktop sidebar and inline on mobile
+- **ScrollToTopButton**: Floating button that appears after 320px of scroll
 
 ### Search
 
@@ -192,9 +192,9 @@ npm run preview
 ## Development Notes
 
 - Navigation structure lives in `content/docs/navigation.ts` — `Sidebar.tsx` and `DocsSearch` both import from it
-- Adding a new docs page: add an entry to `navigation.ts`, then add a description to the `enrichment` map in `content/docs/search-index.ts`
+- Adding a new docs page: add an entry to `navigation.ts`; optionally add a description to the `enrichment` map in `content/docs/search-index.ts` to improve search results for pages that need it
 - MDX pages export `metadata.title` and `metadata.description` at the top of the file
-- Stub pages are `.tsx` files using `ComingSoon`; their `description` prop feeds the search index
+- Stub pages are `.tsx` files using `ComingSoon`; their `description` prop is for the page UI, while search indexing still comes from `navigation.ts` and the `enrichment` map in `content/docs/search-index.ts`
 - The Demo component requires manual `code` strings — there is no automatic extraction
 - Props tables are manually defined — there is no TypeScript prop extraction
 
