@@ -1,16 +1,20 @@
 # Modern React Library
 
-A minimal documentation prototype for a modern React component library built with Next.js, TypeScript, and MDX.
+A documentation prototype for a modern React component library built with Next.js, TypeScript, and MDX.
 
 ## Features
 
-- **Next.js App Router**: Modern file-based routing with App Router
+- **Next.js App Router**: File-based routing with App Router and static export
 - **TypeScript**: Full type safety throughout the codebase
-- **MDX Support**: Write documentation pages with MDX (Markdown + JSX)
-- **Interactive Demos**: Components with code preview, toggle, and copy functionality
-- **Props Tables**: Clean, readable props documentation
+- **MDX Support**: Documentation pages authored in MDX (Markdown + JSX)
+- **Dark / Light Theme**: System-preference detection, manual toggle, and localStorage persistence
+- **Docs Search**: Client-side full-text search across all docs pages with ranked results
+- **Interactive Demos**: Components with live preview, show/hide code toggle, and copy to clipboard
+- **Props Tables**: Clean props documentation tables
+- **Table of Contents**: Auto-generated per-page TOC, desktop sidebar and mobile inline
+- **Scroll to Top**: Floating button that appears after scrolling
 - **Coming Soon Pages**: Consistent stub pages for planned content
-- **Accessible**: Built with accessibility in mind (WCAG 2.1)
+- **Accessible**: WCAG 2.1 compliance, keyboard navigation, and screen reader support
 
 ## Getting Started
 
@@ -39,160 +43,161 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The home page includes a link to the documentation homepage (`/docs/get-started/installation/`).
-
 ## Project Structure
 
 ```
 modern-prototype/
 ├── app/
-│   ├── docs/                      # Documentation pages
+│   ├── docs/                          # Documentation pages (20 routes)
 │   │   ├── get-started/
-│   │   │   ├── installation/      # ✓ Real MDX page
-│   │   │   └── quick-start/       # Coming soon stub
+│   │   │   ├── installation/          # ✓ MDX page
+│   │   │   └── quick-start/           # Stub
 │   │   ├── concepts/
-│   │   │   ├── accessibility/     # ✓ Real MDX page
-│   │   │   ├── performance/       # Coming soon stub
-│   │   │   └── theming/           # Coming soon stub
+│   │   │   ├── accessibility/         # ✓ MDX page
+│   │   │   ├── performance/           # Stub
+│   │   │   └── theming/               # Stub
 │   │   ├── components/
-│   │   │   ├── button/
-│   │   │   │   └── overview/      # ✓ Real MDX page with demo
-│   │   │   └── accordion/         # Coming soon stub
-│   │   ├── grid/                  # All coming soon stubs
-│   │   ├── scheduler/             # All coming soon stubs
+│   │   │   ├── accordion/             # ✓ MDX page with demo + props table
+│   │   │   ├── avatar/                # ✓ MDX page with demo + props table
+│   │   │   ├── button/                # ✓ MDX page with demo + props table
+│   │   │   ├── check-box/             # ✓ MDX page with demo + props table
+│   │   │   └── text-box/              # ✓ MDX page with demo + props table
+│   │   ├── grid/                      # Stubs (Overview, Bind data, Sorting, API Reference)
+│   │   ├── scheduler/                 # Stubs (Overview, Bind data, Resolve overlapping, API Reference)
 │   │   └── releases/
-│   │       └── v0-1-0/            # ✓ Real MDX page
-│   ├── layout.tsx                 # Root layout
-│   └── page.tsx                   # Minimal landing page (static-export safe)
+│   │       └── v0-1-0/                # ✓ MDX page
+│   ├── globals.css                    # Semantic theme tokens (light + dark)
+│   ├── layout.tsx                     # Root layout with ThemeProvider + anti-flash script
+│   └── page.tsx                       # Landing page
 ├── components/
-│   ├── Header.tsx                 # Top header with site title
-│   ├── Sidebar.tsx                # Left navigation sidebar
-│   ├── ComingSoon.tsx             # Stub page component
-│   ├── Demo.tsx                   # Interactive demo component
-│   └── PropsTable.tsx             # Props documentation table
+│   ├── DocsSearch.tsx                 # Client-side docs search with ranked results
+│   ├── DocsShell.tsx                  # Docs layout shell (sidebar, TOC, search)
+│   ├── Header.tsx                     # Top bar with theme toggle and GitHub link
+│   ├── Sidebar.tsx                    # Left navigation sidebar
+│   ├── TableOfContents.tsx            # Auto per-page TOC
+│   ├── ScrollToTopButton.tsx          # Floating scroll-to-top button
+│   ├── ThemeProvider.tsx              # React context for light/dark theme
+│   ├── ThemeToggle.tsx                # Header toggle button
+│   ├── theme.ts                       # Shared ThemeMode type, THEME_STORAGE_KEY, isThemeMode()
+│   ├── CodeBlock.tsx                  # Syntax-highlighted code block
+│   ├── ComingSoon.tsx                 # Stub page component
+│   ├── Demo.tsx                       # Interactive demo (preview + code + copy)
+│   └── PropsTable.tsx                 # Props documentation table
 ├── content/
-│   └── components/
-│       └── button/
-│           └── demos/
-│               └── basic.tsx      # Button demo component
-├── next.config.ts                 # Next.js config with MDX
-├── mdx-components.tsx             # MDX components config
+│   ├── components/                    # Per-component demo sources and prop definitions
+│   │   ├── accordion/
+│   │   ├── avatar/
+│   │   ├── button/
+│   │   ├── check-box/
+│   │   └── text-box/
+│   └── docs/
+│       ├── navigation.ts              # Single source of truth for sidebar routes and titles
+│       └── search-index.ts            # Search index derived from navigation + descriptions
+├── tests/
+│   ├── unit/                          # Vitest + Testing Library unit tests (29 tests, 6 suites)
+│   └── e2e/                           # Playwright smoke and visual regression tests
+├── next.config.ts                     # Next.js config with MDX
+├── mdx-components.tsx                 # MDX component overrides
 └── package.json
 ```
 
-## What's Implemented
+## Docs Pages
 
-### ✓ Real Pages (4 total)
+### Real MDX pages (8)
 
-1. **Installation** (`/docs/get-started/installation`)
-   - Package installation instructions
-   - Prerequisites and setup
-   - Quick verification steps
+| Route | Content |
+|---|---|
+| `/docs/get-started/installation` | Package setup, prerequisites, quick verification |
+| `/docs/concepts/accessibility` | WCAG 2.1 principles, approach, and testing |
+| `/docs/components/accordion` | Collapsible content demo, props table |
+| `/docs/components/avatar` | User identity component demo, props table |
+| `/docs/components/button` | Button variants demo, props table |
+| `/docs/components/check-box` | Boolean input demo, props table |
+| `/docs/components/text-box` | Text input demo, props table |
+| `/docs/releases/v0-1-0` | Release notes |
 
-2. **Accessibility** (`/docs/concepts/accessibility`)
-   - WCAG 2.1 principles
-   - Accessibility approach and features
-   - Testing recommendations
+### Stub pages (11)
 
-3. **Button Overview** (`/docs/components/button/overview`)
-   - Interactive demo with 3 button variants
-   - Props table (variant, disabled, onClick)
-   - Usage guidelines and accessibility notes
+All stubs use the `ComingSoon` component with a description, planned sections list, and a navigation link. Stubbed sections: Quick Start, Performance, Theming, Grid (4 pages), Scheduler (4 pages).
 
-4. **Release v0.1.0** (`/docs/releases/v0-1-0`)
-   - Release notes and features
-   - Installation instructions
-   - Known issues and roadmap
+## Components
 
-### ✓ Stub Pages (13 total)
+### Shell and navigation
 
-All stub pages use the `ComingSoon` component and include:
-- A description of what the page will cover
-- A list of planned sections
-- A link back to relevant overview page
+- **DocsShell**: Docs layout wrapper — composes sidebar, main content, TOC, and search
+- **Header**: Top bar with site title, docs menu toggle (mobile), theme toggle, and GitHub link
+- **Sidebar**: Collapsible navigation driven by `content/docs/navigation.ts`
+- **TableOfContents**: Reads `<h2>` and `<h3>` headings from the active page; shown in desktop sidebar and inline on mobile
+- **ScrollToTopButton**: Floating button that appears after 320px of scroll
 
-Stub pages:
-- Quick start
-- Performance
-- Theming
-- Grid (4 pages: Overview, Bind data, Sorting, API Reference)
-- Scheduler (4 pages: Overview, Bind data, Resolve overlapping, API Reference)
-- Accordion
+### Search
 
-### ✓ Components
+- **DocsSearch**: Filters all docs pages by title, description, and keywords
+- Results are ranked: exact title match → starts with → contains → description match
+- Empty state is announced via `role="status"` outside the listbox
+- Index is derived from `content/docs/navigation.ts`; only descriptions and keywords need manual maintenance
 
-- **Header**: Site title in top bar
-- **Sidebar**: Collapsible navigation with sections
-- **Demo**: Interactive component with:
-  - Preview area
-  - Show/Hide code toggle
-  - Copy to clipboard button
-  - Syntax-highlighted code block
-- **PropsTable**: Clean props documentation table
-- **ComingSoon**: Consistent stub page layout
+### Theme
 
-## Build & Deploy
+- **ThemeProvider / useTheme**: React context managing `'light' | 'dark'` state with localStorage persistence and system-preference fallback
+- **ThemeToggle**: `aria-pressed` button in the header; touch-target 44×44px
+- **theme.ts**: Exports `THEME_STORAGE_KEY`, `ThemeMode`, and `isThemeMode()` type guard shared by the provider, bootstrap script, and tests
+- Anti-flash inline script in `<head>` applies the stored theme before React hydration
+- All component CSS modules use semantic `var(--color-*)` tokens defined in `app/globals.css`
 
-### Build for production
+### Content components
+
+- **Demo**: Live preview pane + show/hide code toggle + copy to clipboard; code strings are passed as props (no automatic extraction)
+- **CodeBlock**: Prism-powered syntax highlighting used inside MDX and Demo
+- **PropsTable**: Manually defined props table
+- **ComingSoon**: Stub page layout with title, description, planned sections, and a navigation link
+
+## Build & Test
 
 ```bash
-npm run build
-```
+# Development server
+npm run dev
 
-This creates a static export in `out/`.
-
-### Preview the static export locally
-
-```bash
-npm run preview
-```
-
-Then open [http://localhost:3000/modern-prototype/](http://localhost:3000/modern-prototype/) (the `basePath` used for GitHub Pages).
-
-`npm start` runs the same static preview server as `npm run preview`.
-
-### Typecheck
-
-```bash
+# TypeScript check
 npm run typecheck
+
+# Unit tests (Vitest + Testing Library)
+npm run test:unit
+
+# E2E smoke tests (Playwright)
+npm run test:e2e
+
+# Visual regression tests (Playwright)
+npm run test:visual
+
+# Production build (static export → out/)
+npm run build
+
+# Preview the static export locally
+npm run preview
 ```
 
 ## Technology Stack
 
-- **Framework**: Next.js 16.1+ (App Router)
-- **Language**: TypeScript 5
-- **Content**: MDX via @next/mdx
-- **Styling**: CSS Modules (no external UI libraries)
-- **Runtime**: React 19
-
-## What's NOT Included
-
-The project is a minimal prototype focusing on a vertical slice. The following are intentionally not implemented:
-
-- Search functionality
-- Version switcher
-- Theme/dark mode toggle
-- Complex theming system
-- TypeScript prop extraction
-- Live code editing/sandbox
-- Mobile responsive optimizations (basic only)
-- Authentication
-- API integration
-- Analytics
+| Layer | Choice |
+|---|---|
+| Framework | Next.js 16.1+ (App Router, static export) |
+| Language | TypeScript 5 |
+| Runtime | React 19 |
+| Content | MDX via `@next/mdx` |
+| Styling | CSS Modules, semantic CSS custom properties |
+| Unit tests | Vitest 4 + Testing Library |
+| E2E / visual | Playwright |
 
 ## Development Notes
 
-- All pages use Next.js App Router conventions
-- MDX pages are in `app/docs/[...path]/page.mdx`
-- Stub pages are React components (`.tsx`) using `ComingSoon`
-- CSS Modules scope styles to components
-- The Demo component requires manual code strings (no automatic extraction)
-- Props tables are manually defined (no TS extraction)
+- Navigation structure lives in `content/docs/navigation.ts` — `Sidebar.tsx` and `DocsSearch` both import from it
+- Adding a new docs page: add an entry to `navigation.ts`; optionally add a description to the `enrichment` map in `content/docs/search-index.ts` to improve search results for pages that need it
+- MDX pages export `metadata.title` and `metadata.description` at the top of the file
+- Stub pages are `.tsx` files using `ComingSoon`; their `description` prop is for the page UI, while search indexing still comes from `navigation.ts` and the `enrichment` map in `content/docs/search-index.ts`
+- The Demo component requires manual `code` strings — there is no automatic extraction
+- Props tables are manually defined — there is no TypeScript prop extraction
 
 ## License
 
 MIT
-
-## Author
-
-Modern React Library Team
